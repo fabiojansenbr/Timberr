@@ -7,6 +7,7 @@ class CustomInputBox extends StatefulWidget {
   final Function(String val) onChanged;
   final TextInputAction textInputAction;
   final TextInputType textInputType;
+  final String? initialValue;
   const CustomInputBox({
     Key? key,
     required this.headerText,
@@ -14,6 +15,7 @@ class CustomInputBox extends StatefulWidget {
     this.textInputAction = TextInputAction.next,
     this.textInputType = TextInputType.number,
     required this.onChanged,
+    this.initialValue,
   }) : super(key: key);
 
   @override
@@ -26,7 +28,7 @@ class _CustomInputBoxState extends State<CustomInputBox> {
   bool isFilled = false;
   @override
   void initState() {
-    _textEditingController = TextEditingController();
+    _textEditingController = TextEditingController(text: widget.initialValue);
     _focusNode = FocusNode();
     _focusNode.addListener(() {
       if (_focusNode.hasFocus) {

@@ -16,27 +16,28 @@ class ProductImageView extends StatelessWidget {
         Positioned(
           right: 0,
           top: 0,
-          child: ClipRRect(
-            borderRadius:
-                const BorderRadius.only(bottomLeft: Radius.circular(50)),
-            child: SizedBox(
-              height: size.height * 0.6,
-              width: size.width - 50,
-              child: PageView(
-                onPageChanged: (index) {
-                  _controller.imageIndex.value = index;
-                },
-                children: [
-                  for (int i = 0; i < imagesList.length; i++)
-                    Hero(
-                      tag: imagesList[i],
-                      child: CachedNetworkImage(
+          child: Hero(
+            tag: imagesList[0],
+            child: ClipRRect(
+              borderRadius: const BorderRadius.only(
+                bottomLeft: Radius.circular(50),
+              ),
+              child: SizedBox(
+                height: size.height * 0.6,
+                width: size.width - 50,
+                child: PageView(
+                  onPageChanged: (index) {
+                    _controller.imageIndex.value = index;
+                  },
+                  children: [
+                    for (int i = 0; i < imagesList.length; i++)
+                      CachedNetworkImage(
                         cacheKey: imagesList[i],
                         imageUrl: imagesList[i],
                         fit: BoxFit.cover,
                       ),
-                    ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

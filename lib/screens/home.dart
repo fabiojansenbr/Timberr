@@ -17,80 +17,114 @@ class Home extends StatelessWidget {
       bottomNavigationBar: const BottomNavBar(
         selectedPos: 0,
       ),
-      body: SafeArea(
-        child: CustomScrollView(
-          physics: const BouncingScrollPhysics(),
-          slivers: [
-            SliverAppBar(
-              leading: IconButton(
-                onPressed: () {},
+      body: CustomScrollView(
+        physics: const BouncingScrollPhysics(),
+        slivers: [
+          SliverAppBar(
+            leading: IconButton(
+              onPressed: () {
+                showSearch(context: context, delegate: CustomSearchDelegate());
+              },
+              icon: SvgPicture.asset(
+                'assets/icons/search_icon.svg',
+                color: const Color(0xFF808080),
+              ),
+            ),
+            title: Column(
+              children: [
+                Text(
+                  'Make home',
+                  style: GoogleFonts.gelasio(
+                    color: const Color(0xFF909090),
+                    fontSize: 18,
+                  ),
+                ),
+                Text(
+                  'BEAUTIFUL',
+                  style: GoogleFonts.gelasio(
+                    color: const Color(0xFF303030),
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+            centerTitle: true,
+            actions: [
+              IconButton(
+                onPressed: () {
+                  Get.to(
+                    () => CartPage(),
+                    transition: Transition.fade,
+                  );
+                },
                 icon: SvgPicture.asset(
-                  'assets/icons/search_icon.svg',
+                  'assets/icons/cart_icon.svg',
                   color: const Color(0xFF808080),
                 ),
-              ),
-              title: Column(
-                children: [
-                  Text(
-                    'Make home',
-                    style: GoogleFonts.gelasio(
-                      color: const Color(0xFF909090),
-                      fontSize: 18,
-                    ),
-                  ),
-                  Text(
-                    'BEAUTIFUL',
-                    style: GoogleFonts.gelasio(
-                      color: const Color(0xFF303030),
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-              centerTitle: true,
-              actions: [
-                IconButton(
-                  onPressed: () {
-                    Get.to(
-                      () => CartPage(),
-                      transition: Transition.fade,
+              )
+            ],
+            bottom: CategoryTabBar(),
+            floating: true,
+            snap: true,
+          ),
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            sliver: Obx(() {
+              return SliverGrid(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 0.55,
+                  mainAxisSpacing: 8,
+                  crossAxisSpacing: 18,
+                ),
+                delegate: SliverChildBuilderDelegate(
+                  (context, index) {
+                    return ProductGridTile(
+                      product: _controller.productsList.elementAt(index),
                     );
                   },
-                  icon: SvgPicture.asset(
-                    'assets/icons/cart_icon.svg',
-                    color: const Color(0xFF808080),
-                  ),
-                )
-              ],
-              bottom: CategoryTabBar(),
-              floating: true,
-              snap: true,
-            ),
-            SliverPadding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              sliver: Obx(() {
-                return SliverGrid(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 0.55,
-                    mainAxisSpacing: 8,
-                    crossAxisSpacing: 18,
-                  ),
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                      return ProductGridTile(
-                        product: _controller.productsList.elementAt(index),
-                      );
-                    },
-                    childCount: _controller.productsList.length,
-                  ),
-                );
-              }),
-            ),
-          ],
-        ),
+                  childCount: _controller.productsList.length,
+                ),
+              );
+            }),
+          ),
+        ],
       ),
     );
+  }
+}
+
+class CustomSearchDelegate extends SearchDelegate {
+  @override
+  List<Widget>? buildActions(BuildContext context) {
+    return [
+      IconButton(
+        onPressed: () {
+          query = "";
+        },
+        icon: const Icon(Icons.clear),
+      ),
+    ];
+  }
+
+  @override
+  Widget? buildLeading(BuildContext context) {
+    return IconButton(
+      onPressed: () {
+        Get.back();
+      },
+      icon: const Icon(Icons.arrow_back_ios),
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    return Text("Hello");
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    return Text("Suggestion");
   }
 }

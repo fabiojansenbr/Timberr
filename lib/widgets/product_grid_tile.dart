@@ -18,6 +18,7 @@ class ProductGridTile extends StatelessWidget {
         Get.to(
           () => ProductPage(product: product),
           duration: const Duration(milliseconds: 500),
+          transition: Transition.fadeIn,
         );
       },
       child: Column(
@@ -25,13 +26,13 @@ class ProductGridTile extends StatelessWidget {
         children: [
           AspectRatio(
             aspectRatio: 0.7,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Stack(
-                children: [
-                  Hero(
-                    tag: product.imagesList[0],
-                    child: CachedNetworkImage(
+            child: Hero(
+              tag: product.imagesList[0],
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Stack(
+                  children: [
+                    CachedNetworkImage(
                       cacheKey: product.imagesList[0],
                       imageUrl: product.imagesList[0],
                       progressIndicatorBuilder:
@@ -51,32 +52,32 @@ class ProductGridTile extends StatelessWidget {
                       width: 500,
                       fit: BoxFit.cover,
                     ),
-                  ),
-                  Positioned(
-                    right: 12,
-                    bottom: 10,
-                    child: GestureDetector(
-                      onTap: () {
-                        _cartController.addToCart(
-                            product, product.colorsList[0]);
-                      },
-                      child: Container(
-                        height: 30,
-                        width: 30,
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF606060).withOpacity(0.4),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: SvgPicture.asset(
-                          'assets/icons/shopping_bag_icon.svg',
-                          height: 20,
-                          width: 20,
-                          fit: BoxFit.scaleDown,
+                    Positioned(
+                      right: 12,
+                      bottom: 10,
+                      child: GestureDetector(
+                        onTap: () {
+                          _cartController.addToCart(
+                              product, product.colorsList[0]);
+                        },
+                        child: Container(
+                          height: 30,
+                          width: 30,
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF606060).withOpacity(0.4),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: SvgPicture.asset(
+                            'assets/icons/shopping_bag_icon.svg',
+                            height: 20,
+                            width: 20,
+                            fit: BoxFit.scaleDown,
+                          ),
                         ),
                       ),
-                    ),
-                  )
-                ],
+                    )
+                  ],
+                ),
               ),
             ),
           ),

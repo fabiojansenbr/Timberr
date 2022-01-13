@@ -9,6 +9,7 @@ import 'package:timberr/models/product.dart';
 import 'package:timberr/screens/product_review_page.dart';
 import 'package:timberr/widgets/color_selection_column.dart';
 import 'package:timberr/widgets/custom_elevated_button.dart';
+import 'package:timberr/widgets/fade_in_widget.dart';
 import 'package:timberr/widgets/product_image_view.dart';
 
 class ProductPage extends StatelessWidget {
@@ -33,20 +34,22 @@ class ProductPage extends StatelessWidget {
                 Positioned(
                   left: 27,
                   top: size.height * 0.05,
-                  child: GestureDetector(
-                    onTap: () {
-                      Get.back();
-                    },
-                    child: Container(
-                      height: 50,
-                      width: 50,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: const Icon(
-                        Icons.arrow_back_ios_new,
-                        color: Color(0xFF303030),
+                  child: FadeInWidget(
+                    child: GestureDetector(
+                      onTap: () {
+                        Get.back();
+                      },
+                      child: Container(
+                        height: 50,
+                        width: 50,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: const Icon(
+                          Icons.arrow_back_ios_new,
+                          color: Color(0xFF303030),
+                        ),
                       ),
                     ),
                   ),
@@ -54,8 +57,10 @@ class ProductPage extends StatelessWidget {
                 Positioned(
                   left: 20,
                   top: size.height * 0.15,
-                  child: ColorSelectionColumn(
-                    colorsList: product.colorsList,
+                  child: FadeInWidget(
+                    child: ColorSelectionColumn(
+                      colorsList: product.colorsList,
+                    ),
                   ),
                 ),
               ],

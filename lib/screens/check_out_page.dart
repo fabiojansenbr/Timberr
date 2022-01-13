@@ -311,11 +311,11 @@ class CheckOutPage extends StatelessWidget {
             const Spacer(),
             CustomElevatedButton(
               onTap: () {
-                Get.off(
+                Get.to(
                   () => const OrderSuccessScreen(),
-                  transition: Transition.zoom,
+                  transition: Transition.cupertino,
                   duration: const Duration(milliseconds: 600),
-                  curve: Curves.easeIn,
+                  curve: Curves.easeOut,
                 );
               },
               text: 'Submit Order',
