@@ -86,9 +86,10 @@ class CartController extends GetxController {
           .eq("Uid", _supabaseClient.auth.currentUser?.id)
           .execute();
     }
-    if (showSnackbar)
+    if (showSnackbar) {
       Get.snackbar(
           "Added to Cart", "${product.name} has been added to the cart");
+    }
   }
 
   Future removeFromCart(CartItem item) async {

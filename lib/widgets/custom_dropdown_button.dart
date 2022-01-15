@@ -6,12 +6,16 @@ class CustomDropdownButton extends StatefulWidget {
   final String hintText;
   final List<DropdownMenuItem> items;
   final Function(String val) onChanged;
+  final String? Function(dynamic val)? validator;
+  final String? initialValue;
   const CustomDropdownButton(
       {Key? key,
       required this.headerText,
       required this.hintText,
       required this.items,
-      required this.onChanged})
+      required this.onChanged,
+      this.validator,
+      this.initialValue})
       : super(key: key);
 
   @override
@@ -19,7 +23,14 @@ class CustomDropdownButton extends StatefulWidget {
 }
 
 class _CustomDropdownButtonState extends State<CustomDropdownButton> {
-  bool isFilled = false;
+  late bool isFilled;
+
+  @override
+  void initState() {
+    super.initState();
+    isFilled = (widget.initialValue == null) ? false : true;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -60,12 +71,14 @@ class _CustomDropdownButtonState extends State<CustomDropdownButton> {
               border: InputBorder.none,
             ),
             items: widget.items,
+            value: widget.initialValue,
             onChanged: (dynamic val) {
               setState(() {
                 isFilled = true;
               });
               widget.onChanged(val);
             },
+            validator: widget.validator,
           ),
         ],
       ),

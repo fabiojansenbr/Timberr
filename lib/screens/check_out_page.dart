@@ -1,10 +1,11 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:timberr/controllers/address_controller.dart';
 import 'package:timberr/screens/order_success_screen.dart';
+import 'package:timberr/screens/shipping_address_screen.dart';
+import 'package:timberr/widgets/address_card.dart';
 import 'package:timberr/widgets/custom_elevated_button.dart';
 
 class CheckOutPage extends StatelessWidget {
@@ -52,64 +53,47 @@ class CheckOutPage extends StatelessWidget {
                   ),
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.to(
+                      () => const ShippingAddressScreen(),
+                      transition: Transition.cupertino,
+                      duration: const Duration(milliseconds: 600),
+                      curve: Curves.easeOut,
+                    );
+                  },
                   icon: SvgPicture.asset("assets/icons/edit_icon.svg"),
                 ),
               ],
             ),
-            Container(
-              height: 125,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: const [
-                  BoxShadow(
-                    color: Color(0x408A959E),
-                    offset: Offset(0, 8),
-                    blurRadius: 40,
-                  )
-                ],
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Spacer(),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 20,
-                    ),
-                    child: Text(
-                      "Aditya R",
-                      style: GoogleFonts.nunitoSans(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: const Color(0xFF303030),
+            GetBuilder<AddressController>(
+              init: AddressController(),
+              builder: (_addressController) {
+                if (_addressController.hasFetched) {
+                  if (_addressController.addressList.isNotEmpty) {
+                    return AddressCard(
+                      isEditable: false,
+                      address: _addressController
+                          .addressList[_addressController.selectedIndex],
+                      index: _addressController.selectedIndex,
+                    );
+                  } else {
+                    return Center(
+                      child: Text(
+                        "No Shipping Addresses have been entered",
+                        style: GoogleFonts.nunitoSans(
+                          fontSize: 14,
+                          color: const Color(0xFF808080),
+                        ),
                       ),
-                    ),
-                  ),
-                  const Divider(
-                    thickness: 2,
-                    color: Color(0xFFF0F0F0),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: 10,
-                    ),
-                    child: Text(
-                      "87 Town square apts, Luz corner road, Mylapore, Chennai, 600004",
-                      style: GoogleFonts.nunitoSans(
-                        fontSize: 14,
-                        color: const Color(0xFF808080),
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                  const Spacer(),
-                ],
-              ),
+                    );
+                  }
+                } else {
+                  return const AddressCard(
+                    isEditable: false,
+                    index: 0,
+                  );
+                }
+              },
             ),
             const Spacer(),
             Row(

@@ -5,9 +5,11 @@ class CustomInputBox extends StatefulWidget {
   final String headerText;
   final String hintText;
   final Function(String val) onChanged;
+  final String? Function(String? val)? validator;
   final TextInputAction textInputAction;
   final TextInputType textInputType;
   final String? initialValue;
+  final int? maxLength;
   const CustomInputBox({
     Key? key,
     required this.headerText,
@@ -16,6 +18,8 @@ class CustomInputBox extends StatefulWidget {
     this.textInputType = TextInputType.number,
     required this.onChanged,
     this.initialValue,
+    this.validator,
+    this.maxLength,
   }) : super(key: key);
 
   @override
@@ -41,6 +45,9 @@ class _CustomInputBoxState extends State<CustomInputBox> {
         });
       }
     });
+    if (_textEditingController.text != "") {
+      isFilled = true;
+    }
     super.initState();
   }
 
@@ -80,6 +87,7 @@ class _CustomInputBoxState extends State<CustomInputBox> {
             controller: _textEditingController,
             focusNode: _focusNode,
             onChanged: widget.onChanged,
+            validator: widget.validator,
             onFieldSubmitted: (val) {
               if (val == '') {
                 setState(() {
@@ -87,6 +95,7 @@ class _CustomInputBoxState extends State<CustomInputBox> {
                 });
               }
             },
+            maxLength: widget.maxLength,
             keyboardType: widget.textInputType,
             textInputAction: widget.textInputAction,
             cursorColor: const Color(0xFF303030),
@@ -99,6 +108,7 @@ class _CustomInputBoxState extends State<CustomInputBox> {
                 fontWeight: FontWeight.w600,
                 color: const Color(0xFFBDBDBD),
               ),
+              counterText: "",
               border: InputBorder.none,
             ),
           ),

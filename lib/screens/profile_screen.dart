@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:timberr/controllers/address_controller.dart';
 import 'package:timberr/controllers/auth_controller.dart';
 import 'package:timberr/screens/my_reviews_screen.dart';
 import 'package:timberr/screens/orders_screen.dart';
@@ -100,18 +101,27 @@ class ProfileScreen extends StatelessWidget {
               },
             ),
             const Spacer(),
-            ProfileTile(
-              name: "Shipping Addresses",
-              description: "03 Addresses",
-              onTap: () {
-                Get.to(
-                  () => const ShippingAddressScreen(),
-                  transition: Transition.cupertino,
-                  duration: const Duration(milliseconds: 600),
-                  curve: Curves.easeOut,
-                );
-              },
-            ),
+            GetBuilder<AddressController>(
+                init: AddressController(),
+                builder: (_addressController) {
+                  String addressCount =
+                      _addressController.addressList.length.toString();
+                  if (addressCount != '0' && addressCount.length == 1) {
+                    addressCount = '0' + addressCount;
+                  }
+                  return ProfileTile(
+                    name: "Shipping Addresses",
+                    description: "$addressCount Addresses",
+                    onTap: () {
+                      Get.to(
+                        () => const ShippingAddressScreen(),
+                        transition: Transition.cupertino,
+                        duration: const Duration(milliseconds: 600),
+                        curve: Curves.easeOut,
+                      );
+                    },
+                  );
+                }),
             const Spacer(),
             ProfileTile(
               name: "Payment Method",

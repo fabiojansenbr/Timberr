@@ -1,17 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_utils/get_utils.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:timberr/controllers/address_controller.dart';
+import 'package:timberr/models/address.dart';
 import 'package:timberr/widgets/custom_dropdown_button.dart';
 import 'package:timberr/widgets/custom_elevated_button.dart';
 import 'package:timberr/widgets/custom_input_box.dart';
 
-class AddShippingScreen extends StatelessWidget {
-  AddShippingScreen({Key? key}) : super(key: key);
+class EditShippingScreen extends StatelessWidget {
+  final Address initialAddress;
+  final int index;
+  late String name, address, country, city, district;
+  late int pincode;
+  EditShippingScreen(
+      {Key? key, required this.initialAddress, required this.index})
+      : super(key: key) {
+    name = initialAddress.name;
+    address = initialAddress.address;
+    pincode = initialAddress.pincode;
+    country = initialAddress.country;
+    city = initialAddress.city;
+    district = initialAddress.district;
+  }
   final _formKey = GlobalKey<FormState>();
   final AddressController _addressController = Get.find();
-  String name = "", address = "", country = "", city = "", district = "";
-  int pincode = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +41,7 @@ class AddShippingScreen extends StatelessWidget {
         ),
         centerTitle: true,
         title: Text(
-          "ADD SHIPPING ADDRESS",
+          "EDIT SHIPPING ADDRESS",
           style: GoogleFonts.merriweather(
             color: const Color(0xFF303030),
             fontWeight: FontWeight.bold,
@@ -48,6 +61,7 @@ class AddShippingScreen extends StatelessWidget {
                 headerText: "Full name",
                 hintText: "Ex: Aditya R",
                 textInputType: TextInputType.name,
+                initialValue: initialAddress.name,
                 onChanged: (val) {
                   name = val;
                 },
@@ -63,6 +77,7 @@ class AddShippingScreen extends StatelessWidget {
                 headerText: "Address",
                 hintText: "Ex: 87 Church Street",
                 textInputType: TextInputType.streetAddress,
+                initialValue: initialAddress.address,
                 onChanged: (val) {
                   address = val;
                 },
@@ -77,8 +92,8 @@ class AddShippingScreen extends StatelessWidget {
               CustomInputBox(
                 headerText: "Zipcode (Postal Code)",
                 hintText: "Ex: 600014",
-                maxLength: 6,
                 textInputAction: TextInputAction.done,
+                initialValue: initialAddress.pincode.toString(),
                 onChanged: (val) {
                   pincode = int.parse(val);
                 },
@@ -87,8 +102,6 @@ class AddShippingScreen extends StatelessWidget {
                     return "Please enter your pincode";
                   } else if (!val!.isNum) {
                     return "Please enter a valid pincode";
-                  } else if (val.length != 6) {
-                    return "Pincode must be 6 characters long";
                   } else {
                     return null;
                   }
@@ -97,6 +110,7 @@ class AddShippingScreen extends StatelessWidget {
               CustomDropdownButton(
                 headerText: "Country",
                 hintText: "Select Country",
+                initialValue: initialAddress.country,
                 items: const [
                   DropdownMenuItem(
                     child: Text("India"),
@@ -113,6 +127,7 @@ class AddShippingScreen extends StatelessWidget {
               CustomDropdownButton(
                 headerText: "City",
                 hintText: "Select City",
+                initialValue: initialAddress.city,
                 items: const [
                   DropdownMenuItem(
                     child: Text("Chennai"),
@@ -129,6 +144,7 @@ class AddShippingScreen extends StatelessWidget {
               CustomDropdownButton(
                 headerText: "District",
                 hintText: "Select District",
+                initialValue: initialAddress.district,
                 items: const [
                   DropdownMenuItem(
                     child: Text("Mylapore"),
@@ -146,11 +162,46 @@ class AddShippingScreen extends StatelessWidget {
               CustomElevatedButton(
                 onTap: () {
                   if (_formKey.currentState!.validate()) {
-                    _addressController.uploadAddress(
-                        name, address, pincode, country, city, district);
+                    _addressController.editAddress(
+                      index,
+                      Address(
+                          id: initialAddress.id,
+                          name: name,
+                          address: address,
+                          pincode: pincode,
+                          country: country,
+                          city: city,
+                          district: district),
+                    );
                   }
                 },
-                text: "SAVE ADDRESS",
+                text: "EDIT ADDRESS",
+              ),
+              const SizedBox(height: 24),
+              SizedBox(
+                height: 60,
+                width: double.infinity,
+                child: OutlinedButton(
+                  onPressed: () {
+                    _addressController.deleteAddress(index);
+                  },
+                  child: Text(
+                    "DELETE",
+                    style: GoogleFonts.nunitoSans(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: const Color(0xFFEB5757),
+                      letterSpacing: 1.5,
+                    ),
+                  ),
+                  style: OutlinedButton.styleFrom(
+                    primary: const Color(0xFF303030),
+                    side: const BorderSide(color: Color(0xFFEB5757)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
