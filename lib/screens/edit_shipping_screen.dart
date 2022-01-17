@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_utils/get_utils.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:timberr/controllers/address_controller.dart';
 import 'package:timberr/models/address.dart';
@@ -11,20 +10,20 @@ import 'package:timberr/widgets/custom_input_box.dart';
 class EditShippingScreen extends StatelessWidget {
   final Address initialAddress;
   final int index;
-  late String name, address, country, city, district;
-  late int pincode;
+  final _formKey = GlobalKey<FormState>();
+  final AddressController _addressController = Get.find();
+
   EditShippingScreen(
       {Key? key, required this.initialAddress, required this.index})
       : super(key: key) {
-    name = initialAddress.name;
-    address = initialAddress.address;
-    pincode = initialAddress.pincode;
-    country = initialAddress.country;
-    city = initialAddress.city;
-    district = initialAddress.district;
+    _addressController.name = initialAddress.name;
+    _addressController.address = initialAddress.address;
+    _addressController.pincode = initialAddress.pincode;
+    _addressController.country = initialAddress.country;
+    _addressController.city = initialAddress.city;
+    _addressController.district = initialAddress.district;
   }
-  final _formKey = GlobalKey<FormState>();
-  final AddressController _addressController = Get.find();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,7 +62,7 @@ class EditShippingScreen extends StatelessWidget {
                 textInputType: TextInputType.name,
                 initialValue: initialAddress.name,
                 onChanged: (val) {
-                  name = val;
+                  _addressController.name = val;
                 },
                 validator: (val) {
                   if (val?.isEmpty ?? true) {
@@ -79,7 +78,7 @@ class EditShippingScreen extends StatelessWidget {
                 textInputType: TextInputType.streetAddress,
                 initialValue: initialAddress.address,
                 onChanged: (val) {
-                  address = val;
+                  _addressController.address = val;
                 },
                 validator: (val) {
                   if (val?.isEmpty ?? true) {
@@ -95,7 +94,7 @@ class EditShippingScreen extends StatelessWidget {
                 textInputAction: TextInputAction.done,
                 initialValue: initialAddress.pincode.toString(),
                 onChanged: (val) {
-                  pincode = int.parse(val);
+                  _addressController.pincode = int.parse(val);
                 },
                 validator: (val) {
                   if (val?.isEmpty ?? true) {
@@ -118,7 +117,7 @@ class EditShippingScreen extends StatelessWidget {
                   )
                 ],
                 onChanged: (val) {
-                  country = val;
+                  _addressController.country = val;
                 },
                 validator: (val) {
                   return (val == null) ? "Please Select your Country" : null;
@@ -135,7 +134,7 @@ class EditShippingScreen extends StatelessWidget {
                   )
                 ],
                 onChanged: (val) {
-                  city = val;
+                  _addressController.city = val;
                 },
                 validator: (val) {
                   return (val == null) ? "Please Select the City" : null;
@@ -152,7 +151,7 @@ class EditShippingScreen extends StatelessWidget {
                   )
                 ],
                 onChanged: (val) {
-                  district = val;
+                  _addressController.district = val;
                 },
                 validator: (val) {
                   return (val == null) ? "Please Select the District" : null;
@@ -162,17 +161,7 @@ class EditShippingScreen extends StatelessWidget {
               CustomElevatedButton(
                 onTap: () {
                   if (_formKey.currentState!.validate()) {
-                    _addressController.editAddress(
-                      index,
-                      Address(
-                          id: initialAddress.id,
-                          name: name,
-                          address: address,
-                          pincode: pincode,
-                          country: country,
-                          city: city,
-                          district: district),
-                    );
+                    _addressController.editAddress(index, initialAddress.id);
                   }
                 },
                 text: "EDIT ADDRESS",

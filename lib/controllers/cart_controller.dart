@@ -55,7 +55,7 @@ class CartController extends GetxController {
       await _supabaseClient
           .from('Cart_Items')
           .update({'quantity': cartList.elementAt(index).quantity})
-          .eq("cart_id", cartList.elementAt(index).cart_id)
+          .eq("cart_id", cartList.elementAt(index).cartId)
           .execute();
     } else {
       //product not there in cart
@@ -94,7 +94,7 @@ class CartController extends GetxController {
 
   Future removeFromCart(CartItem item) async {
     cartList.remove(item);
-    cartIdList.remove(item.cart_id);
+    cartIdList.remove(item.cartId);
     total.value = total.value - (item.quantity * item.price);
     //remove cart_id from user cart list
     _supabaseClient
@@ -108,7 +108,7 @@ class CartController extends GetxController {
     await _supabaseClient
         .from('Cart_Items')
         .delete(returning: ReturningOption.minimal)
-        .eq("cart_id", item.cart_id)
+        .eq("cart_id", item.cartId)
         .execute();
   }
 
@@ -118,7 +118,7 @@ class CartController extends GetxController {
     await _supabaseClient
         .from('Cart_Items')
         .update({'quantity': item.quantity})
-        .eq("cart_id", item.cart_id)
+        .eq("cart_id", item.cartId)
         .execute();
     update();
   }
@@ -131,7 +131,7 @@ class CartController extends GetxController {
       await _supabaseClient
           .from('Cart_Items')
           .update({'quantity': item.quantity})
-          .eq("cart_id", item.cart_id)
+          .eq("cart_id", item.cartId)
           .execute();
       total.value = total.value - item.price;
       update();

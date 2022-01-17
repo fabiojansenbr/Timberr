@@ -72,7 +72,7 @@ class ProductReviewPage extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(width: 10),
-                          Text(
+                          const Text(
                             '4.5',
                             style: TextStyle(
                               fontSize: 24,

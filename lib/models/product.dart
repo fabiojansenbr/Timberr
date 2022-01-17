@@ -78,38 +78,39 @@ Color colorFromString(String colorString) {
 }
 
 String colorToString(Color color) {
-  if (color == Colors.red)
+  if (color == Colors.red) {
     return "red";
-  else if (color == Colors.green)
+  } else if (color == Colors.green) {
     return "green";
-  else if (color == Colors.blue)
+  } else if (color == Colors.blue) {
     return "blue";
-  else if (color == Colors.white)
+  } else if (color == Colors.white) {
     return "white";
-  else if (color == Colors.black)
+  } else if (color == Colors.black) {
     return "black";
-  else if (color == Colors.purple)
+  } else if (color == Colors.purple) {
     return "purple";
-  else if (color == Colors.orange)
+  } else if (color == Colors.orange) {
     return "orange";
-  else if (color == Colors.indigo)
+  } else if (color == Colors.indigo) {
     return "indigo";
-  else if (color == Colors.teal)
+  } else if (color == Colors.teal) {
     return "teal";
-  else if (color == Colors.grey)
+  } else if (color == Colors.grey) {
     return "grey";
-  else if (color == Colors.amber)
+  } else if (color == Colors.amber) {
     return "amber";
-  else if (color == Colors.cyan)
+  } else if (color == Colors.cyan) {
     return "cyan";
-  else if (color == Colors.brown)
+  } else if (color == Colors.brown) {
     return "brown";
-  else if (color == Colors.lime)
+  } else if (color == Colors.lime) {
     return "lime";
-  else if (color == Colors.pink)
+  } else if (color == Colors.pink) {
     return "pink";
-  else if (color == Colors.yellow)
+  } else if (color == Colors.yellow) {
     return "yellow";
-  else
+  } else {
     return "white";
+  }
 }

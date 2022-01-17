@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:supabase/supabase.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:timberr/controllers/cart_controller.dart';
 import 'package:timberr/controllers/favorites_controller.dart';
@@ -36,17 +35,17 @@ class AuthState<T extends StatefulWidget> extends SupabaseAuthState<T> {
   @override
   void onUnauthenticated() {
     if (mounted) {
-      Get.to(() => const OnBoardingWelcomeScreen());
+      Get.off(() => const OnBoardingWelcomeScreen());
     }
   }
 
   @override
   void onAuthenticated(Session session) {
     if (mounted) {
-      Get.put(HomeController());
-      Get.put(FavoritesController());
-      Get.put(CartController());
-      Get.to(() => SplashScreen());
+      Get.put(HomeController(), permanent: true);
+      Get.put(FavoritesController(), permanent: true);
+      Get.put(CartController(), permanent: true);
+      Get.off(() => SplashScreen());
     }
   }
 

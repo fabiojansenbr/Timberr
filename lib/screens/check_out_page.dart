@@ -3,15 +3,17 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:timberr/controllers/address_controller.dart';
+import 'package:timberr/controllers/card_details_controller.dart';
 import 'package:timberr/screens/order_success_screen.dart';
+import 'package:timberr/screens/payment_methods_screen.dart';
 import 'package:timberr/screens/shipping_address_screen.dart';
 import 'package:timberr/widgets/address_card.dart';
 import 'package:timberr/widgets/custom_elevated_button.dart';
 
 class CheckOutPage extends StatelessWidget {
   final int orderAmount;
-  const CheckOutPage({Key? key, required this.orderAmount}) : super(key: key);
-
+  CheckOutPage({Key? key, required this.orderAmount}) : super(key: key);
+  final _cardDetailController = Get.put(CardDetailsController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -108,60 +110,78 @@ class CheckOutPage extends StatelessWidget {
                   ),
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.to(
+                      () => PaymentMethodsScreen(),
+                      transition: Transition.cupertino,
+                      duration: const Duration(milliseconds: 600),
+                      curve: Curves.easeOut,
+                    );
+                  },
                   icon: SvgPicture.asset("assets/icons/edit_icon.svg"),
                 ),
               ],
             ),
-            Container(
-              height: 69,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: const [
-                  BoxShadow(
-                    color: Color(0x408A959E),
-                    offset: Offset(0, 8),
-                    blurRadius: 40,
-                  )
-                ],
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Row(
-                children: [
-                  Container(
-                    height: 38,
-                    width: 64,
-                    margin: const EdgeInsets.symmetric(horizontal: 20),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Color(0x20000000),
-                          offset: Offset(0, 1),
-                          blurRadius: 25,
-                        )
-                      ],
-                      borderRadius: BorderRadius.circular(8),
+            Obx(() {
+              String lastFourDigits = "XXXX";
+              if (_cardDetailController.cardDetailList.isNotEmpty &&
+                  _cardDetailController.hasFetched) {
+                lastFourDigits = _cardDetailController.cardDetailList
+                    .elementAt(_cardDetailController.selectedIndex.value)
+                    .cardNumber
+                    .toString()
+                    .substring(12);
+              }
+              return Container(
+                height: 69,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Color(0x408A959E),
+                      offset: Offset(0, 8),
+                      blurRadius: 40,
+                    )
+                  ],
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                      height: 38,
+                      width: 64,
+                      margin: const EdgeInsets.symmetric(horizontal: 20),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Color(0x20000000),
+                            offset: Offset(0, 1),
+                            blurRadius: 25,
+                          )
+                        ],
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: SvgPicture.asset(
+                        'assets/icons/mastercard_bw.svg',
+                        height: 25,
+                        width: 32,
+                        fit: BoxFit.scaleDown,
+                      ),
                     ),
-                    child: SvgPicture.asset(
-                      'assets/icons/mastercard_bw.svg',
-                      height: 25,
-                      width: 32,
-                      fit: BoxFit.scaleDown,
+                    Text(
+                      "**** **** **** $lastFourDigits",
+                      style: GoogleFonts.nunitoSans(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: const Color(0xFF222222),
+                      ),
                     ),
-                  ),
-                  Text(
-                    "**** **** **** 3947",
-                    style: GoogleFonts.nunitoSans(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      color: const Color(0xFF222222),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+                  ],
+                ),
+              );
+            }),
             const Spacer(),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -240,7 +260,7 @@ class CheckOutPage extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "\$ ${orderAmount}.00",
+                        "\$ $orderAmount.00",
                         style: GoogleFonts.nunitoSans(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,

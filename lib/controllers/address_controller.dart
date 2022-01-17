@@ -8,6 +8,8 @@ class AddressController extends GetxController {
   int selectedIndex = 0;
   bool hasFetched = false;
 
+  String name = "", address = "", country = "", city = "", district = "";
+  int pincode = 0;
   @override
   void onInit() {
     getDefaultShippingAddress();
@@ -56,6 +58,11 @@ class AddressController extends GetxController {
   }
 
   Future setDefaultShippingAddress(int index) async {
+    if (selectedIndex == index) {
+      return;
+    }
+    selectedIndex = index;
+    update();
     await _supabaseClient
         .from("Users")
         .update({'default_shipping_id': addressList.elementAt(index).id})
@@ -64,12 +71,9 @@ class AddressController extends GetxController {
           _supabaseClient.auth.user()?.id,
         )
         .execute();
-    update();
-    selectedIndex = index;
   }
 
-  Future uploadAddress(String name, String address, int pincode, String country,
-      String city, String district) async {
+  Future uploadAddress() async {
     final insertData = await _supabaseClient.from("Addresses").insert({
       'full_name': name,
       'address': address,
@@ -107,12 +111,20 @@ class AddressController extends GetxController {
     Get.back();
   }
 
-  Future editAddress(int index, Address newAddress) async {
+  Future editAddress(int index, int addressId) async {
+    Address newAddress = Address(
+        id: addressId,
+        name: name,
+        address: address,
+        pincode: pincode,
+        country: country,
+        city: city,
+        district: district);
     //update values in the database
     await _supabaseClient
         .from("Addresses")
         .update(newAddress.toJson())
-        .eq("id", newAddress.id)
+        .eq("id", addressId)
         .execute();
     //update the value locally
     addressList[index] = newAddress;

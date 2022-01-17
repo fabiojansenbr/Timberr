@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CustomInputBox extends StatefulWidget {
@@ -10,6 +11,8 @@ class CustomInputBox extends StatefulWidget {
   final TextInputType textInputType;
   final String? initialValue;
   final int? maxLength;
+  final List<TextInputFormatter>? inputFormatters;
+  final bool obscureText;
   const CustomInputBox({
     Key? key,
     required this.headerText,
@@ -20,6 +23,8 @@ class CustomInputBox extends StatefulWidget {
     this.initialValue,
     this.validator,
     this.maxLength,
+    this.inputFormatters,
+    this.obscureText = false,
   }) : super(key: key);
 
   @override
@@ -95,9 +100,11 @@ class _CustomInputBoxState extends State<CustomInputBox> {
                 });
               }
             },
+            obscureText: widget.obscureText,
             maxLength: widget.maxLength,
             keyboardType: widget.textInputType,
             textInputAction: widget.textInputAction,
+            inputFormatters: widget.inputFormatters,
             cursorColor: const Color(0xFF303030),
             decoration: InputDecoration(
               contentPadding: EdgeInsets.zero,
@@ -114,6 +121,45 @@ class _CustomInputBoxState extends State<CustomInputBox> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class CreditCardFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    String actualText = newValue.text.replaceAll(" ", "");
+    String newText = "";
+    for (int i = 0; i < actualText.length; i++) {
+      if (i % 4 == 0) {
+        newText += ' ';
+      }
+      newText += actualText[i];
+    }
+
+    return newValue.copyWith(
+        text: newText,
+        selection: TextSelection.collapsed(offset: newText.length));
+  }
+}
+
+class DateFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    String actualText = newValue.text.replaceAll("/", "");
+    String newText = "";
+    for (int i = 0; i < actualText.length; i++) {
+      if (i == 2) {
+        newText += '/';
+      }
+      newText += actualText[i];
+    }
+
+    return newValue.copyWith(
+      text: newText,
+      selection: TextSelection.collapsed(offset: newText.length),
     );
   }
 }

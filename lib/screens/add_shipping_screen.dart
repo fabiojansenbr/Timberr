@@ -10,8 +10,7 @@ class AddShippingScreen extends StatelessWidget {
   AddShippingScreen({Key? key}) : super(key: key);
   final _formKey = GlobalKey<FormState>();
   final AddressController _addressController = Get.find();
-  String name = "", address = "", country = "", city = "", district = "";
-  int pincode = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +48,7 @@ class AddShippingScreen extends StatelessWidget {
                 hintText: "Ex: Aditya R",
                 textInputType: TextInputType.name,
                 onChanged: (val) {
-                  name = val;
+                  _addressController.name = val;
                 },
                 validator: (val) {
                   if (val?.isEmpty ?? true) {
@@ -64,7 +63,7 @@ class AddShippingScreen extends StatelessWidget {
                 hintText: "Ex: 87 Church Street",
                 textInputType: TextInputType.streetAddress,
                 onChanged: (val) {
-                  address = val;
+                  _addressController.address = val;
                 },
                 validator: (val) {
                   if (val?.isEmpty ?? true) {
@@ -80,7 +79,7 @@ class AddShippingScreen extends StatelessWidget {
                 maxLength: 6,
                 textInputAction: TextInputAction.done,
                 onChanged: (val) {
-                  pincode = int.parse(val);
+                  _addressController.pincode = int.parse(val);
                 },
                 validator: (val) {
                   if (val?.isEmpty ?? true) {
@@ -104,7 +103,7 @@ class AddShippingScreen extends StatelessWidget {
                   )
                 ],
                 onChanged: (val) {
-                  country = val;
+                  _addressController.country = val;
                 },
                 validator: (val) {
                   return (val == null) ? "Please Select your Country" : null;
@@ -120,7 +119,7 @@ class AddShippingScreen extends StatelessWidget {
                   )
                 ],
                 onChanged: (val) {
-                  city = val;
+                  _addressController.city = val;
                 },
                 validator: (val) {
                   return (val == null) ? "Please Select the City" : null;
@@ -136,7 +135,7 @@ class AddShippingScreen extends StatelessWidget {
                   )
                 ],
                 onChanged: (val) {
-                  district = val;
+                  _addressController.district = val;
                 },
                 validator: (val) {
                   return (val == null) ? "Please Select the District" : null;
@@ -146,8 +145,7 @@ class AddShippingScreen extends StatelessWidget {
               CustomElevatedButton(
                 onTap: () {
                   if (_formKey.currentState!.validate()) {
-                    _addressController.uploadAddress(
-                        name, address, pincode, country, city, district);
+                    _addressController.uploadAddress();
                   }
                 },
                 text: "SAVE ADDRESS",

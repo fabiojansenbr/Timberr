@@ -3,7 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:timberr/controllers/address_controller.dart';
-import 'package:timberr/controllers/auth_controller.dart';
+import 'package:timberr/controllers/card_details_controller.dart';
+import 'package:timberr/controllers/user_controller.dart';
 import 'package:timberr/screens/my_reviews_screen.dart';
 import 'package:timberr/screens/orders_screen.dart';
 import 'package:timberr/screens/payment_methods_screen.dart';
@@ -14,7 +15,8 @@ import 'package:timberr/widgets/profile_tile.dart';
 
 class ProfileScreen extends StatelessWidget {
   ProfileScreen({Key? key}) : super(key: key);
-  final _authController = Get.put(AuthController());
+  final _userController = Get.put(UserController());
+  final _cardDetailsController = Get.put(CardDetailsController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,8 +39,8 @@ class ProfileScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () async {
-              await _authController.signOut();
+            onPressed: () {
+              _userController.signOut();
             },
             icon: SvgPicture.asset(
               "assets/icons/logout_icon.svg",
@@ -53,40 +55,41 @@ class ProfileScreen extends StatelessWidget {
         child: Column(
           children: [
             const Spacer(),
-            Row(
-              children: [
-                Container(
-                  height: 80,
-                  width: 80,
-                  decoration: const BoxDecoration(shape: BoxShape.circle),
-                  clipBehavior: Clip.antiAlias,
-                  child: Image.network(
-                    "https://avatars.githubusercontent.com/u/62930521?v=4",
-                  ),
-                ),
-                const SizedBox(width: 20),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Aditya R",
-                      style: GoogleFonts.nunitoSans(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: const Color(0xFF303030),
-                      ),
+            GetBuilder<UserController>(builder: (_controller) {
+              return Row(
+                children: [
+                  Container(
+                    width: 80,
+                    decoration: const BoxDecoration(shape: BoxShape.circle),
+                    clipBehavior: Clip.antiAlias,
+                    child: Image.network(
+                      "https://avatars.githubusercontent.com/u/62930521?v=4",
                     ),
-                    Text(
-                      "adeeteya@gmail.com",
-                      style: GoogleFonts.nunitoSans(
-                        fontSize: 14,
-                        color: const Color(0xFF808080),
+                  ),
+                  const SizedBox(width: 20),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        _controller.name,
+                        style: GoogleFonts.nunitoSans(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: const Color(0xFF303030),
+                        ),
                       ),
-                    )
-                  ],
-                )
-              ],
-            ),
+                      Text(
+                        _controller.email,
+                        style: GoogleFonts.nunitoSans(
+                          fontSize: 14,
+                          color: const Color(0xFF808080),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              );
+            }),
             const Spacer(flex: 2),
             ProfileTile(
               name: "My Orders",
@@ -123,18 +126,21 @@ class ProfileScreen extends StatelessWidget {
                   );
                 }),
             const Spacer(),
-            ProfileTile(
-              name: "Payment Method",
-              description: "You have 2 cards",
-              onTap: () {
-                Get.to(
-                  () => const PaymentMethodsScreen(),
-                  transition: Transition.cupertino,
-                  duration: const Duration(milliseconds: 600),
-                  curve: Curves.easeOut,
-                );
-              },
-            ),
+            Obx(() {
+              return ProfileTile(
+                name: "Payment Method",
+                description:
+                    "You have ${_cardDetailsController.cardDetailList.length} cards",
+                onTap: () {
+                  Get.to(
+                    () => PaymentMethodsScreen(),
+                    transition: Transition.cupertino,
+                    duration: const Duration(milliseconds: 600),
+                    curve: Curves.easeOut,
+                  );
+                },
+              );
+            }),
             const Spacer(),
             ProfileTile(
               name: "My Reviews",

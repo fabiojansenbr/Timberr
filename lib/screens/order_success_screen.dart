@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:timberr/screens/home.dart';
 import 'package:timberr/widgets/custom_elevated_button.dart';
-import 'package:timberr/wrapper.dart';
 
 class OrderSuccessScreen extends StatelessWidget {
   const OrderSuccessScreen({Key? key}) : super(key: key);
@@ -68,7 +68,12 @@ class OrderSuccessScreen extends StatelessWidget {
                   width: double.infinity,
                   child: OutlinedButton(
                     onPressed: () {
-                      Get.offAll(() => const Wrapper());
+                      Get.offAll(
+                        () => Home(),
+                        transition: Transition.downToUp,
+                        duration: const Duration(milliseconds: 400),
+                        curve: Curves.easeOut,
+                      );
                     },
                     child: Text(
                       "BACK TO HOME",

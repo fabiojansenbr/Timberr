@@ -10,9 +10,9 @@ class PaymentCardView extends StatelessWidget {
   final String expiryDateString;
   const PaymentCardView(
       {Key? key,
-      this.lastFourDigits = "XXXX",
-      this.cardHolderName = "XXXXXX",
-      this.expiryDateString = "XX/XX",
+      required this.lastFourDigits,
+      required this.cardHolderName,
+      required this.expiryDateString,
       this.isSelected = true,
       this.isMasterCard})
       : super(key: key);

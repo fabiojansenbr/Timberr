@@ -1,0 +1,69 @@
+import 'package:get/get.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:timberr/models/card_detail.dart';
+
+class CardDetailsController extends GetxController {
+  final _supabaseClient = Supabase.instance.client;
+  var cardDetailList = <CardDetail>[].obs;
+  var selectedIndex = 0.obs;
+  bool hasFetched = false;
+  @override
+  void onInit() {
+    getDefaultCardDetail();
+    super.onInit();
+  }
+
+  Future fetchCardDetails() async {
+    //fetch Card Details
+    final response = await _supabaseClient
+        .from("Card_Details")
+        .select()
+        .eq(
+          "user_id",
+          _supabaseClient.auth.user()?.id,
+        )
+        .execute();
+    final responseList = response.data as List;
+    for (int i = 0; i < responseList.length; i++) {
+      cardDetailList.add(CardDetail.fromJson(responseList[i]));
+    }
+    hasFetched = true;
+  }
+
+  Future getDefaultCardDetail() async {
+    //get default card detail
+    final defaultShippingResponse = await _supabaseClient
+        .from("Users")
+        .select('default_card_detail_id')
+        .eq(
+          "Uid",
+          _supabaseClient.auth.user()?.id,
+        )
+        .execute();
+    int? responseId = defaultShippingResponse.data[0]['default_card_detail_id'];
+    await fetchCardDetails();
+    if (responseId != null) {
+      for (int i = 0; i < cardDetailList.length; i++) {
+        if (cardDetailList.elementAt(i).id == responseId) {
+          selectedIndex.value = i;
+          break;
+        }
+      }
+    }
+  }
+
+  Future setDefaultCardDetail(int index) async {
+    if (selectedIndex.value == index) {
+      return;
+    }
+    selectedIndex.value = index;
+    await _supabaseClient
+        .from("Users")
+        .update({'default_card_detail_id': cardDetailList.elementAt(index).id})
+        .eq(
+          "Uid",
+          _supabaseClient.auth.user()?.id,
+        )
+        .execute();
+  }
+}
