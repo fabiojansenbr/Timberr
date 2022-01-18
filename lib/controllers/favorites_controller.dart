@@ -3,7 +3,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:timberr/models/product.dart';
 
 class FavoritesController extends GetxController {
-  var favoritesList = <Product>{}.obs;
+  var favoritesList = <Product>[].obs;
   final _supabaseClient = Supabase.instance.client;
 
   Future fetchFavorites() async {
@@ -42,6 +42,11 @@ class FavoritesController extends GetxController {
 
   void removeProduct(Product product) {
     favoritesList.remove(product);
+    updateDatabase();
+  }
+
+  void removeProductAt(int index) {
+    favoritesList.removeAt(index);
     updateDatabase();
   }
 }

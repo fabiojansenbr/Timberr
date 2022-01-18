@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -325,9 +326,11 @@ class SettingsScreen extends StatelessWidget {
                     color: const Color(0xFF222222),
                   ),
                 ),
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
+                GestureDetector(
+                  onTap: () {
+                    launch("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+                  },
+                  child: const Icon(
                     Icons.arrow_forward_ios,
                     color: Color(0xFF909090),
                   ),

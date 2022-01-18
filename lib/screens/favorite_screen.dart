@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:timberr/controllers/cart_controller.dart';
 import 'package:timberr/controllers/favorites_controller.dart';
+import 'package:timberr/screens/cart_page.dart';
+import 'package:timberr/screens/search_delegate/favorite_search_delegate.dart';
 import 'package:timberr/widgets/bottom_navbar.dart';
 import 'package:timberr/widgets/favorite_list_tile.dart';
 
@@ -16,7 +18,9 @@ class FavoriteScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            showSearch(context: context, delegate: FavoriteSearchDelegate());
+          },
           icon: SvgPicture.asset("assets/icons/search_icon.svg"),
         ),
         title: Text(
@@ -30,7 +34,12 @@ class FavoriteScreen extends StatelessWidget {
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Get.to(
+                () => CartPage(),
+                transition: Transition.fade,
+              );
+            },
             icon: SvgPicture.asset("assets/icons/cart_icon.svg"),
           )
         ],

@@ -58,12 +58,20 @@ class ProfileScreen extends StatelessWidget {
             GetBuilder<UserController>(builder: (_controller) {
               return Row(
                 children: [
-                  Container(
-                    width: 80,
-                    decoration: const BoxDecoration(shape: BoxShape.circle),
-                    clipBehavior: Clip.antiAlias,
-                    child: Image.network(
-                      "https://avatars.githubusercontent.com/u/62930521?v=4",
+                  GestureDetector(
+                    onTap: () {
+                      _controller.uploadProfilePicture();
+                    },
+                    child: Container(
+                      width: 80,
+                      decoration: const BoxDecoration(shape: BoxShape.circle),
+                      clipBehavior: Clip.antiAlias,
+                      child: (_controller.profilePictureUrl == null)
+                          ? Image.asset("assets/default_avatar.png")
+                          : FadeInImage.assetNetwork(
+                              placeholder: "assets/default_avatar.png",
+                              image: _controller.profilePictureUrl!,
+                            ),
                     ),
                   ),
                   const SizedBox(width: 20),

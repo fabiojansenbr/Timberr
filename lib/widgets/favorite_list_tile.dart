@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:timberr/controllers/cart_controller.dart';
 import 'package:timberr/controllers/favorites_controller.dart';
 import 'package:timberr/models/product.dart';
+import 'package:timberr/screens/product_page.dart';
 
 class FavoriteListTile extends StatelessWidget {
   final Product product;
@@ -20,22 +21,34 @@ class FavoriteListTile extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
       child: Row(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: CachedNetworkImage(
-              cacheKey: product.imagesList[0],
-              imageUrl: product.imagesList[0],
-              placeholder: (context, url) {
-                return Image.asset(
-                  'assets/furniture_loading.gif',
+          GestureDetector(
+            onTap: () {
+              Get.to(
+                () => ProductPage(product: product),
+                duration: const Duration(milliseconds: 500),
+                transition: Transition.fadeIn,
+              );
+            },
+            child: Hero(
+              tag: product.imagesList[0],
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: CachedNetworkImage(
+                  cacheKey: product.imagesList[0],
+                  imageUrl: product.imagesList[0],
+                  placeholder: (context, url) {
+                    return Image.asset(
+                      'assets/furniture_loading.gif',
+                      height: 100,
+                      width: 100,
+                      fit: BoxFit.cover,
+                    );
+                  },
                   height: 100,
                   width: 100,
                   fit: BoxFit.cover,
-                );
-              },
-              height: 100,
-              width: 100,
-              fit: BoxFit.cover,
+                ),
+              ),
             ),
           ),
           Expanded(

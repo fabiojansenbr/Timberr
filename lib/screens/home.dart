@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:timberr/controllers/home_controller.dart';
 import 'package:timberr/screens/cart_page.dart';
+import 'package:timberr/screens/search_delegate/product_search_delegate.dart';
 import 'package:timberr/widgets/bottom_navbar.dart';
 import 'package:timberr/widgets/category_tab_bar.dart';
 import 'package:timberr/widgets/product_grid_tile.dart';
@@ -23,7 +24,7 @@ class Home extends StatelessWidget {
           SliverAppBar(
             leading: IconButton(
               onPressed: () {
-                showSearch(context: context, delegate: CustomSearchDelegate());
+                showSearch(context: context, delegate: ProductSearchDelegate());
               },
               icon: SvgPicture.asset(
                 'assets/icons/search_icon.svg',
@@ -92,39 +93,5 @@ class Home extends StatelessWidget {
         ],
       ),
     );
-  }
-}
-
-class CustomSearchDelegate extends SearchDelegate {
-  @override
-  List<Widget>? buildActions(BuildContext context) {
-    return [
-      IconButton(
-        onPressed: () {
-          query = "";
-        },
-        icon: const Icon(Icons.clear),
-      ),
-    ];
-  }
-
-  @override
-  Widget? buildLeading(BuildContext context) {
-    return IconButton(
-      onPressed: () {
-        Get.back();
-      },
-      icon: const Icon(Icons.arrow_back_ios),
-    );
-  }
-
-  @override
-  Widget buildResults(BuildContext context) {
-    return const Text("Hello");
-  }
-
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    return const Text("Suggestion");
   }
 }

@@ -104,20 +104,22 @@ class ProductReviewPage extends StatelessWidget {
             color: Color(0xFFF0F0F0),
           ),
           Expanded(
-              child: ListView.builder(
-            itemCount: 10,
-            itemBuilder: (context, index) {
-              return ProductReviewCard(
-                reviewerName: "Aditya R",
-                ratingValue: index % 5 + 1,
-                dateString: "25/12/2021",
-                profileImageUrl:
-                    "https://avatars.githubusercontent.com/u/62930521?v=4",
-                reviewDescription:
-                    "Nice Furniture with good delivery. The delivery time is very fast. Then products look like exactly the picture in the app. Besides, color is also the same and quality is very good despite very cheap price",
-              );
-            },
-          ))
+            child: ListView.builder(
+              itemCount: 10,
+              physics: const BouncingScrollPhysics(),
+              itemBuilder: (context, index) {
+                return ProductReviewCard(
+                  reviewerName: "Aditya R",
+                  ratingValue: index % 5 + 1,
+                  dateString: "25/12/2021",
+                  profileImageUrl:
+                      "https://avatars.githubusercontent.com/u/62930521?v=4",
+                  reviewDescription:
+                      "Nice Furniture with good delivery. The delivery time is very fast. Then products look like exactly the picture in the app. Besides, color is also the same and quality is very good despite very cheap price",
+                );
+              },
+            ),
+          )
         ],
       ),
     );

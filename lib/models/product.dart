@@ -36,6 +36,10 @@ class Product {
       'imagesList': imagesList
     };
   }
+
+  Product productElement() {
+    return this;
+  }
 }
 
 Color colorFromString(String colorString) {

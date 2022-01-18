@@ -25,4 +25,8 @@ class CartItem extends Product {
   void removeQuantity(int newQuantity) {
     quantity -= newQuantity;
   }
+
+  Product getProduct() {
+    return super.productElement();
+  }
 }

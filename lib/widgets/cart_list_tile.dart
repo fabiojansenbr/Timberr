@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:timberr/controllers/cart_controller.dart';
 import 'package:timberr/models/cart_item.dart';
+import 'package:timberr/screens/product_page.dart';
 
 class CartListTile extends StatelessWidget {
   final CartItem cartItem;
@@ -17,27 +18,39 @@ class CartListTile extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            decoration: BoxDecoration(
-              border: Border.all(color: cartItem.color, width: 2),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: CachedNetworkImage(
-                cacheKey: cartItem.imagesList[0],
-                imageUrl: cartItem.imagesList[0],
-                placeholder: (context, url) {
-                  return Image.asset(
-                    'assets/furniture_loading.gif',
-                    height: 500,
-                    width: 500,
+          GestureDetector(
+            onTap: () {
+              Get.to(
+                () => ProductPage(product: cartItem.getProduct()),
+                duration: const Duration(milliseconds: 500),
+                transition: Transition.fadeIn,
+              );
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: cartItem.color, width: 2),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Hero(
+                tag: cartItem.imagesList[0],
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: CachedNetworkImage(
+                    cacheKey: cartItem.imagesList[0],
+                    imageUrl: cartItem.imagesList[0],
+                    placeholder: (context, url) {
+                      return Image.asset(
+                        'assets/furniture_loading.gif',
+                        height: 500,
+                        width: 500,
+                        fit: BoxFit.cover,
+                      );
+                    },
+                    height: 100,
+                    width: 100,
                     fit: BoxFit.cover,
-                  );
-                },
-                height: 100,
-                width: 100,
-                fit: BoxFit.cover,
+                  ),
+                ),
               ),
             ),
           ),

@@ -196,7 +196,8 @@ class ProductPage extends StatelessWidget {
                   children: [
                     Obx(() {
                       bool _isFavorite = false;
-                      for (int i = 0;
+                      int i = 0;
+                      for (i = 0;
                           i < _favoriteController.favoritesList.length;
                           i++) {
                         if (product.productId ==
@@ -213,7 +214,7 @@ class ProductPage extends StatelessWidget {
                         ),
                         onTap: () {
                           if (_isFavorite) {
-                            _favoriteController.removeProduct(product);
+                            _favoriteController.removeProductAt(i);
                           } else {
                             _favoriteController.addProduct(product);
                           }
