@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:timberr/constants.dart';
 import 'package:timberr/wrapper.dart';
 
 class UserController extends GetxController {
@@ -39,19 +40,20 @@ class UserController extends GetxController {
         child: Text(
           "Cancel",
           style: GoogleFonts.nunitoSans(
-            color: const Color(0xFFEB5757),
+            color: kFireOpal,
           ),
         ),
       ),
       confirm: TextButton(
         onPressed: () async {
           await _supabaseClient.auth.signOut();
+          Get.deleteAll(force: true);
           Get.offAll(() => const Wrapper());
         },
         child: Text(
           "Yes",
           style: GoogleFonts.nunitoSans(
-            color: const Color(0xFF303030),
+            color: kOffBlack,
           ),
         ),
       ),

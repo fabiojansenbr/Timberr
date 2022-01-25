@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:timberr/widgets/bottom_navbar.dart';
-import 'package:timberr/widgets/notification_tile.dart';
+import 'package:timberr/constants.dart';
+import 'package:timberr/widgets/tabbed/bottom_navbar.dart';
+import 'package:timberr/widgets/tiles/notification_tile.dart';
 
 class NotificationScreen extends StatelessWidget {
   const NotificationScreen({Key? key}) : super(key: key);
@@ -17,11 +17,7 @@ class NotificationScreen extends StatelessWidget {
         ),
         title: Text(
           "NOTIFICATION",
-          style: GoogleFonts.merriweather(
-            fontSize: 16,
-            color: const Color(0xFF303030),
-            fontWeight: FontWeight.bold,
-          ),
+          style: kMerriweatherBold,
         ),
         centerTitle: true,
       ),
@@ -41,7 +37,7 @@ class NotificationScreen extends StatelessWidget {
           return const Divider(
             height: 0,
             thickness: 1,
-            color: Color(0xFFF0F0F0),
+            color: kSnowFlakeWhite,
             indent: 20,
             endIndent: 20,
           );

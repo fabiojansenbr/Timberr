@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:timberr/constants.dart';
 import 'package:timberr/models/product.dart';
 import 'package:timberr/services/search_service.dart';
-import 'package:timberr/widgets/product_grid_tile.dart';
+import 'package:timberr/widgets/tiles/product_grid_tile.dart';
 
 class ProductSearchDelegate extends SearchDelegate {
   @override
@@ -44,7 +45,7 @@ class ProductSearchDelegate extends SearchDelegate {
                   "No Matching Products Found 🥺",
                   style: GoogleFonts.nunitoSans(
                     fontSize: 16,
-                    color: const Color(0xFF808080),
+                    color: kGrey,
                   ),
                 ),
               );
@@ -77,7 +78,7 @@ class ProductSearchDelegate extends SearchDelegate {
         } else if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(
             child: CircularProgressIndicator(
-              color: Color(0xFF303030),
+              color: kOffBlack,
             ),
           );
         }

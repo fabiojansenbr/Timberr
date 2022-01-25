@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:timberr/constants.dart';
 import 'package:timberr/controllers/home_controller.dart';
-import 'package:timberr/screens/cart_page.dart';
+import 'package:timberr/screens/cart/cart_screen.dart';
 import 'package:timberr/screens/search_delegate/product_search_delegate.dart';
-import 'package:timberr/widgets/bottom_navbar.dart';
-import 'package:timberr/widgets/category_tab_bar.dart';
-import 'package:timberr/widgets/product_grid_tile.dart';
+import 'package:timberr/widgets/tabbed/bottom_navbar.dart';
+import 'package:timberr/widgets/tabbed/category_tab_bar.dart';
+import 'package:timberr/widgets/tiles/product_grid_tile.dart';
 
 class Home extends StatelessWidget {
   Home({Key? key}) : super(key: key);
@@ -28,7 +29,7 @@ class Home extends StatelessWidget {
               },
               icon: SvgPicture.asset(
                 'assets/icons/search_icon.svg',
-                color: const Color(0xFF808080),
+                color: kGrey,
               ),
             ),
             title: Column(
@@ -36,14 +37,14 @@ class Home extends StatelessWidget {
                 Text(
                   'Make home',
                   style: GoogleFonts.gelasio(
-                    color: const Color(0xFF909090),
+                    color: kTinGrey,
                     fontSize: 18,
                   ),
                 ),
                 Text(
                   'BEAUTIFUL',
                   style: GoogleFonts.gelasio(
-                    color: const Color(0xFF303030),
+                    color: kOffBlack,
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
@@ -55,13 +56,13 @@ class Home extends StatelessWidget {
               IconButton(
                 onPressed: () {
                   Get.to(
-                    () => CartPage(),
+                    () => CartScreen(),
                     transition: Transition.fade,
                   );
                 },
                 icon: SvgPicture.asset(
                   'assets/icons/cart_icon.svg',
-                  color: const Color(0xFF808080),
+                  color: kGrey,
                 ),
               )
             ],

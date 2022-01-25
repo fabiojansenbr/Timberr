@@ -4,8 +4,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:timberr/controllers/cart_controller.dart';
 import 'package:timberr/controllers/favorites_controller.dart';
 import 'package:timberr/controllers/home_controller.dart';
-import 'package:timberr/screens/onboarding_welcome.dart';
-import 'package:timberr/screens/splash_screen.dart';
+import 'package:timberr/screens/authentication/onboarding_welcome.dart';
+import 'package:timberr/screens/authentication/splash_screen.dart';
 
 class Wrapper extends StatefulWidget {
   const Wrapper({Key? key}) : super(key: key);

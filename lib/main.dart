@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:timberr/constants.dart';
 import 'package:timberr/private_keys.dart';
 import 'package:timberr/wrapper.dart';
 
@@ -29,17 +30,9 @@ class TimberrApp extends StatelessWidget {
         fontFamily: GoogleFonts.nunitoSans().fontFamily,
         appBarTheme: const AppBarTheme(color: Colors.white, elevation: 0),
         scaffoldBackgroundColor: Colors.white,
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            primary: const Color(0xFF303030),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-          ),
-        ),
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
-            primary: const Color(0xFF303030),
+            primary: kOffBlack,
           ),
         ),
       ),

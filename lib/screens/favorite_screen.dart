@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:timberr/constants.dart';
 import 'package:timberr/controllers/cart_controller.dart';
 import 'package:timberr/controllers/favorites_controller.dart';
-import 'package:timberr/screens/cart_page.dart';
+import 'package:timberr/screens/cart/cart_screen.dart';
 import 'package:timberr/screens/search_delegate/favorite_search_delegate.dart';
-import 'package:timberr/widgets/bottom_navbar.dart';
-import 'package:timberr/widgets/favorite_list_tile.dart';
+import 'package:timberr/widgets/tabbed/bottom_navbar.dart';
+import 'package:timberr/widgets/tiles/favorite_list_tile.dart';
 
 class FavoriteScreen extends StatelessWidget {
   FavoriteScreen({Key? key}) : super(key: key);
@@ -25,18 +26,14 @@ class FavoriteScreen extends StatelessWidget {
         ),
         title: Text(
           "FAVORITE",
-          style: GoogleFonts.merriweather(
-            fontSize: 16,
-            color: const Color(0xFF303030),
-            fontWeight: FontWeight.bold,
-          ),
+          style: kMerriweatherBold,
         ),
         centerTitle: true,
         actions: [
           IconButton(
             onPressed: () {
               Get.to(
-                () => CartPage(),
+                () => CartScreen(),
                 transition: Transition.fade,
               );
             },
@@ -65,7 +62,7 @@ class FavoriteScreen extends StatelessWidget {
                   return const Divider(
                     height: 12,
                     thickness: 1,
-                    color: Color(0xFFF0F0F0),
+                    color: kSnowFlakeWhite,
                     indent: 20,
                     endIndent: 20,
                   );
@@ -100,8 +97,11 @@ class FavoriteScreen extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     elevation: 8,
                     minimumSize: const Size(50, 50),
-                    primary: const Color(0xFF303030),
-                    shadowColor: const Color(0xFF303030),
+                    primary: kOffBlack,
+                    shadowColor: kOffBlack,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
                   ),
                 ),
               ),
