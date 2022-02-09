@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:timberr/constants.dart';
 
 class CustomInputBox extends StatefulWidget {
@@ -83,10 +82,7 @@ class _CustomInputBoxState extends State<CustomInputBox> {
         children: [
           Text(
             widget.headerText,
-            style: GoogleFonts.nunitoSans(
-              fontSize: 12,
-              color: kTrolleyGrey,
-            ),
+            style: kNunitoSans12TrolleyGrey,
           ),
           const SizedBox(height: 4),
           TextFormField(
@@ -111,11 +107,7 @@ class _CustomInputBoxState extends State<CustomInputBox> {
               contentPadding: EdgeInsets.zero,
               isCollapsed: true,
               hintText: widget.hintText,
-              hintStyle: GoogleFonts.nunitoSans(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: kNoghreiSilver,
-              ),
+              hintStyle: kNunitoSansSemiBold16NorgheiSilver,
               counterText: "",
               border: InputBorder.none,
             ),

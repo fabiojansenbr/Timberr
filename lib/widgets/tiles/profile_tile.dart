@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:timberr/constants.dart';
 
 class ProfileTile extends StatelessWidget {
@@ -16,9 +15,7 @@ class ProfileTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        onTap();
-      },
+      onTap: onTap,
       child: Container(
         height: 80,
         width: double.infinity,
@@ -42,18 +39,11 @@ class ProfileTile extends StatelessWidget {
               children: [
                 Text(
                   name,
-                  style: GoogleFonts.nunitoSans(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: kOffBlack,
-                  ),
+                  style: kNunitoSansBold18,
                 ),
                 Text(
                   description,
-                  style: GoogleFonts.nunitoSans(
-                    fontSize: 12,
-                    color: kGrey,
-                  ),
+                  style: kNunitoSans12Grey,
                 ),
               ],
             ),

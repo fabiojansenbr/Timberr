@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:timberr/constants.dart';
@@ -37,9 +36,9 @@ class UserController extends GetxController {
         onPressed: () {
           navigator?.pop();
         },
-        child: Text(
+        child: const Text(
           "Cancel",
-          style: GoogleFonts.nunitoSans(
+          style: TextStyle(
             color: kFireOpal,
           ),
         ),
@@ -50,9 +49,9 @@ class UserController extends GetxController {
           Get.deleteAll(force: true);
           Get.offAll(() => const Wrapper());
         },
-        child: Text(
+        child: const Text(
           "Yes",
-          style: GoogleFonts.nunitoSans(
+          style: TextStyle(
             color: kOffBlack,
           ),
         ),

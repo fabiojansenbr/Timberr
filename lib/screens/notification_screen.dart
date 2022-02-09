@@ -15,9 +15,9 @@ class NotificationScreen extends StatelessWidget {
           onPressed: () {},
           icon: SvgPicture.asset("assets/icons/search_icon.svg"),
         ),
-        title: Text(
+        title: const Text(
           "NOTIFICATION",
-          style: kMerriweatherBold,
+          style: kMerriweatherBold16,
         ),
         centerTitle: true,
       ),

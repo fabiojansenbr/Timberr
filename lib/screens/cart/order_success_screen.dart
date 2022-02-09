@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:timberr/constants.dart';
 import 'package:timberr/screens/home.dart';
 import 'package:timberr/widgets/buttons/custom_elevated_button.dart';
 
 class OrderSuccessScreen extends StatelessWidget {
   const OrderSuccessScreen({Key? key}) : super(key: key);
+
+  void _offToHome() {
+    Get.offAll(
+      () => Home(),
+      transition: Transition.downToUp,
+      duration: const Duration(milliseconds: 400),
+      curve: Curves.easeOut,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +31,7 @@ class OrderSuccessScreen extends StatelessWidget {
                 const Spacer(flex: 2),
                 Text(
                   "SUCCESS!",
-                  style: kMerriweatherBold.copyWith(
+                  style: kMerriweatherBold16.copyWith(
                     fontSize: 36,
                     letterSpacing: 1.5,
                   ),
@@ -55,8 +63,7 @@ class OrderSuccessScreen extends StatelessWidget {
                 const Spacer(),
                 Text(
                   "Your order will be delivered soon.\nThank you for choosing our app!",
-                  style: GoogleFonts.nunitoSans(
-                    fontSize: 18,
+                  style: kNunitoSans18.copyWith(
                     color: kGraniteGrey,
                   ),
                 ),
@@ -67,21 +74,10 @@ class OrderSuccessScreen extends StatelessWidget {
                   height: 60,
                   width: double.infinity,
                   child: OutlinedButton(
-                    onPressed: () {
-                      Get.offAll(
-                        () => Home(),
-                        transition: Transition.downToUp,
-                        duration: const Duration(milliseconds: 400),
-                        curve: Curves.easeOut,
-                      );
-                    },
-                    child: Text(
+                    onPressed: _offToHome,
+                    child: const Text(
                       "BACK TO HOME",
-                      style: GoogleFonts.nunitoSans(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                        color: kOffBlack,
-                      ),
+                      style: kNunitoSansSemiBold18,
                     ),
                     style: OutlinedButton.styleFrom(
                       primary: kOffBlack,

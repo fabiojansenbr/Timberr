@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 const kOffBlack = Color(0xFF303030);
 const kLeadBlack = Color(0xFF212121);
@@ -17,36 +16,127 @@ const kSeaGreen = Color(0xFF2AA952);
 const kCrayolaGreen = Color(0xFF27AE60);
 const kFireOpal = Color(0xFFEB5757);
 
-final kMerriweatherBold = GoogleFonts.merriweather(
+const String supabaseUrl = "https://wzicmnwevvqgzttnmvou.supabase.co";
+const kNunitoSans10Grey =
+    TextStyle(fontFamily: "NunitoSans", fontSize: 10, color: kGrey);
+const kNunitoSans12Grey =
+    TextStyle(fontFamily: "NunitoSans", fontSize: 12, color: kGrey);
+const kNunitoSans12TrolleyGrey =
+    TextStyle(fontFamily: "NunitoSans", fontSize: 12, color: kTrolleyGrey);
+const kNunitoSansSemiBold12 = TextStyle(
+  fontFamily: "NunitoSans",
+  fontSize: 12,
+  fontWeight: FontWeight.w600,
+  color: Color(0xCCFFFFFF),
+);
+const kNunitoSans14 = TextStyle(
+  fontFamily: "NunitoSans",
+  fontSize: 14,
+  color: kOffBlack,
+);
+const kNunitoSans16 = TextStyle(
+  fontFamily: "NunitoSans",
+  fontSize: 14,
+);
+const kNunitoSansSemiBold16 = TextStyle(
+  fontFamily: "NunitoSans",
+  fontSize: 16,
+  fontWeight: FontWeight.w600,
+  color: kOffBlack,
+);
+const kNunitoSansSemiBold16TinGrey = TextStyle(
+  fontFamily: "NunitoSans",
+  fontSize: 16,
+  fontWeight: FontWeight.w600,
+  color: kTinGrey,
+);
+const kNunitoSansSemiBold16NorgheiSilver = TextStyle(
+  fontFamily: "NunitoSans",
+  fontSize: 16,
+  fontWeight: FontWeight.w600,
+  color: kNoghreiSilver,
+);
+const kNunitoSansBold16 = TextStyle(
+  fontFamily: "NunitoSans",
   fontSize: 16,
   fontWeight: FontWeight.bold,
   color: kOffBlack,
 );
-
-final inputDecorationConst = InputDecoration(
+const kNunitoSans18 = TextStyle(fontFamily: "NunitoSans", fontSize: 18);
+const kNunitoSansTinGrey18 =
+    TextStyle(fontFamily: "NunitoSans", fontSize: 18, color: kTinGrey);
+const kNunitoSansBold18 = TextStyle(
+  fontFamily: "NunitoSans",
+  fontSize: 18,
+  color: kOffBlack,
+  fontWeight: FontWeight.bold,
+);
+const kNunitoSansSemiBold18 = TextStyle(
+  fontFamily: "NunitoSans",
+  fontSize: 18,
+  color: kOffBlack,
+  fontWeight: FontWeight.w600,
+);
+const kNunitoSansSemiBold20White = TextStyle(
+    fontFamily: "NunitoSans",
+    fontSize: 20,
+    fontWeight: FontWeight.w600,
+    color: Colors.white);
+const kNunitoSansBold20 = TextStyle(
+    fontFamily: "NunitoSans",
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+    color: kOffBlack);
+const kNunitoSansBold24 = TextStyle(
+    fontFamily: "NunitoSans",
+    fontSize: 24,
+    fontWeight: FontWeight.bold,
+    color: kOffBlack);
+const kMerriweatherBold16 = TextStyle(
+  fontFamily: "Merriweather",
+  fontSize: 16,
+  fontWeight: FontWeight.bold,
+  color: kOffBlack,
+);
+const kMerriweatherBold24 = TextStyle(
+    fontFamily: "Merriweather",
+    fontSize: 24,
+    fontWeight: FontWeight.bold,
+    letterSpacing: 1.2);
+const kMerriweather30TinGrey = TextStyle(
+  fontFamily: "Merriweather",
+  fontSize: 30,
+  color: kTinGrey,
+);
+const kGelasio18 = TextStyle(
+  fontFamily: "Gelasio",
+  fontSize: 18,
+);
+const inputDecorationConst = InputDecoration(
   floatingLabelBehavior: FloatingLabelBehavior.always,
-  labelStyle: GoogleFonts.nunitoSans(
+  labelStyle: TextStyle(
+    fontFamily: "NunitoSans",
     color: kTinGrey,
   ),
-  enabledBorder: const UnderlineInputBorder(
+  enabledBorder: UnderlineInputBorder(
     borderSide: BorderSide(
       color: kChristmasSilver,
       width: 2,
     ),
   ),
-  focusedBorder: const UnderlineInputBorder(
+  focusedBorder: UnderlineInputBorder(
     borderSide: BorderSide(
       color: kOffBlack,
       width: 2,
     ),
   ),
-  errorBorder: const UnderlineInputBorder(
+  errorBorder: UnderlineInputBorder(
     borderSide: BorderSide(
       color: kFireOpal,
       width: 2,
     ),
   ),
-  focusedErrorBorder: const UnderlineInputBorder(
+  focusedErrorBorder: UnderlineInputBorder(
     borderSide: BorderSide(
       color: kFireOpal,
       width: 2,

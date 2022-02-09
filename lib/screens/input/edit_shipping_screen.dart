@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:timberr/constants.dart';
 import 'package:timberr/controllers/address_controller.dart';
 import 'package:timberr/models/address.dart';
@@ -25,6 +24,80 @@ class EditShippingScreen extends StatelessWidget {
     _addressController.district = initialAddress.district;
   }
 
+  void _nameOnChanged(String val) {
+    _addressController.name = val;
+  }
+
+  String? _nameValidator(String? val) {
+    if (val?.isEmpty ?? true) {
+      return "Please enter your name";
+    } else {
+      return null;
+    }
+  }
+
+  void _addressOnChanged(String val) {
+    _addressController.address = val;
+  }
+
+  String? _addressValidator(String? val) {
+    if (val?.isEmpty ?? true) {
+      return "Please enter the address";
+    } else {
+      return null;
+    }
+  }
+
+  void _pincodeOnChanged(String val) {
+    _addressController.pincode = int.parse(val);
+  }
+
+  String? _pincodeValidator(String? val) {
+    if (val?.isEmpty ?? true) {
+      return "Please enter your pincode";
+    } else if (!val!.isNum) {
+      return "Please enter a valid pincode";
+    } else if (val.length != 6) {
+      return "Pincode must be 6 characters long";
+    } else {
+      return null;
+    }
+  }
+
+  void _countryOnChanged(String val) {
+    _addressController.country = val;
+  }
+
+  String? _countryValidator(val) {
+    return (val == null) ? "Please Select the Country" : null;
+  }
+
+  void _cityOnChanged(String val) {
+    _addressController.city = val;
+  }
+
+  String? _cityValidator(val) {
+    return (val == null) ? "Please Select the City" : null;
+  }
+
+  void _districtOnChanged(String val) {
+    _addressController.district = val;
+  }
+
+  String? _districtValidator(val) {
+    return (val == null) ? "Please Select the District" : null;
+  }
+
+  void _editAddress() {
+    if (_formKey.currentState!.validate()) {
+      _addressController.editAddress(index, initialAddress.id);
+    }
+  }
+
+  void _deleteAddress() {
+    _addressController.deleteAddress(index);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,9 +113,9 @@ class EditShippingScreen extends StatelessWidget {
           ),
         ),
         centerTitle: true,
-        title: Text(
+        title: const Text(
           "EDIT SHIPPING ADDRESS",
-          style: kMerriweatherBold,
+          style: kMerriweatherBold16,
         ),
       ),
       body: SingleChildScrollView(
@@ -58,50 +131,24 @@ class EditShippingScreen extends StatelessWidget {
                 hintText: "Ex: Aditya R",
                 textInputType: TextInputType.name,
                 initialValue: initialAddress.name,
-                onChanged: (val) {
-                  _addressController.name = val;
-                },
-                validator: (val) {
-                  if (val?.isEmpty ?? true) {
-                    return "Please enter your name";
-                  } else {
-                    return null;
-                  }
-                },
+                onChanged: _nameOnChanged,
+                validator: _nameValidator,
               ),
               CustomInputBox(
                 headerText: "Address",
                 hintText: "Ex: 87 Church Street",
                 textInputType: TextInputType.streetAddress,
                 initialValue: initialAddress.address,
-                onChanged: (val) {
-                  _addressController.address = val;
-                },
-                validator: (val) {
-                  if (val?.isEmpty ?? true) {
-                    return "Please enter the address";
-                  } else {
-                    return null;
-                  }
-                },
+                onChanged: _addressOnChanged,
+                validator: _addressValidator,
               ),
               CustomInputBox(
                 headerText: "Zipcode (Postal Code)",
                 hintText: "Ex: 600014",
                 textInputAction: TextInputAction.done,
                 initialValue: initialAddress.pincode.toString(),
-                onChanged: (val) {
-                  _addressController.pincode = int.parse(val);
-                },
-                validator: (val) {
-                  if (val?.isEmpty ?? true) {
-                    return "Please enter your pincode";
-                  } else if (!val!.isNum) {
-                    return "Please enter a valid pincode";
-                  } else {
-                    return null;
-                  }
-                },
+                onChanged: _pincodeOnChanged,
+                validator: _pincodeValidator,
               ),
               CustomDropdownBox(
                 headerText: "Country",
@@ -113,12 +160,8 @@ class EditShippingScreen extends StatelessWidget {
                     value: "India",
                   )
                 ],
-                onChanged: (val) {
-                  _addressController.country = val;
-                },
-                validator: (val) {
-                  return (val == null) ? "Please Select your Country" : null;
-                },
+                onChanged: _countryOnChanged,
+                validator: _countryValidator,
               ),
               CustomDropdownBox(
                 headerText: "City",
@@ -130,12 +173,8 @@ class EditShippingScreen extends StatelessWidget {
                     value: "Chennai",
                   )
                 ],
-                onChanged: (val) {
-                  _addressController.city = val;
-                },
-                validator: (val) {
-                  return (val == null) ? "Please Select the City" : null;
-                },
+                onChanged: _cityOnChanged,
+                validator: _cityValidator,
               ),
               CustomDropdownBox(
                 headerText: "District",
@@ -147,20 +186,12 @@ class EditShippingScreen extends StatelessWidget {
                     value: "Mylapore",
                   )
                 ],
-                onChanged: (val) {
-                  _addressController.district = val;
-                },
-                validator: (val) {
-                  return (val == null) ? "Please Select the District" : null;
-                },
+                onChanged: _districtOnChanged,
+                validator: _districtValidator,
               ),
               const SizedBox(height: 24),
               CustomElevatedButton(
-                onTap: () {
-                  if (_formKey.currentState!.validate()) {
-                    _addressController.editAddress(index, initialAddress.id);
-                  }
-                },
+                onTap: _editAddress,
                 text: "EDIT ADDRESS",
               ),
               const SizedBox(height: 24),
@@ -168,14 +199,10 @@ class EditShippingScreen extends StatelessWidget {
                 height: 60,
                 width: double.infinity,
                 child: OutlinedButton(
-                  onPressed: () {
-                    _addressController.deleteAddress(index);
-                  },
+                  onPressed: _deleteAddress,
                   child: Text(
                     "DELETE",
-                    style: GoogleFonts.nunitoSans(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
+                    style: kNunitoSansSemiBold18.copyWith(
                       color: kFireOpal,
                       letterSpacing: 1.5,
                     ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:timberr/constants.dart';
 import 'package:timberr/controllers/address_controller.dart';
 import 'package:timberr/screens/input/add_shipping_screen.dart';
@@ -8,6 +7,15 @@ import 'package:timberr/widgets/cards/address_card.dart';
 
 class ShippingAddressScreen extends StatelessWidget {
   const ShippingAddressScreen({Key? key}) : super(key: key);
+
+  void _addOnTap() {
+    Get.to(
+      () => AddShippingScreen(),
+      transition: Transition.cupertino,
+      duration: const Duration(milliseconds: 600),
+      curve: Curves.easeOut,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,20 +32,13 @@ class ShippingAddressScreen extends StatelessWidget {
           ),
         ),
         centerTitle: true,
-        title: Text(
+        title: const Text(
           "SHIPPING ADDRESS",
-          style: kMerriweatherBold,
+          style: kMerriweatherBold16,
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Get.to(
-            () => AddShippingScreen(),
-            transition: Transition.cupertino,
-            duration: const Duration(milliseconds: 600),
-            curve: Curves.easeOut,
-          );
-        },
+        onPressed: _addOnTap,
         elevation: 8,
         backgroundColor: Colors.white,
         foregroundColor: kOffBlack,
@@ -52,8 +53,7 @@ class ShippingAddressScreen extends StatelessWidget {
           return Center(
             child: Text(
               "No Shipping Addresses have been entered",
-              style: GoogleFonts.nunitoSans(
-                fontSize: 14,
+              style: kNunitoSans14.copyWith(
                 color: kGrey,
               ),
             ),
@@ -88,8 +88,7 @@ class ShippingAddressScreen extends StatelessWidget {
                     ),
                     Text(
                       "Use as the shipping address",
-                      style: GoogleFonts.nunitoSans(
-                        fontSize: 18,
+                      style: kNunitoSans18.copyWith(
                         color: kGrey,
                       ),
                     )

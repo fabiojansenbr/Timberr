@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:timberr/constants.dart';
 import 'package:timberr/controllers/card_details_controller.dart';
 import 'package:timberr/screens/input/add_payment_screen.dart';
@@ -9,6 +8,15 @@ import 'package:timberr/widgets/cards/payment_card_view.dart';
 class PaymentMethodsScreen extends StatelessWidget {
   PaymentMethodsScreen({Key? key}) : super(key: key);
   final CardDetailsController _cardDetailsController = Get.find();
+  void _toAddPaymentScreen() {
+    Get.to(
+      () => AddPaymentScreen(),
+      transition: Transition.cupertino,
+      duration: const Duration(milliseconds: 600),
+      curve: Curves.easeOut,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,20 +32,13 @@ class PaymentMethodsScreen extends StatelessWidget {
           ),
         ),
         centerTitle: true,
-        title: Text(
+        title: const Text(
           "PAYMENT METHOD",
-          style: kMerriweatherBold,
+          style: kMerriweatherBold16,
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Get.to(
-            () => AddPaymentScreen(),
-            transition: Transition.cupertino,
-            duration: const Duration(milliseconds: 600),
-            curve: Curves.easeOut,
-          );
-        },
+        onPressed: _toAddPaymentScreen,
         elevation: 8,
         backgroundColor: Colors.white,
         foregroundColor: kOffBlack,
@@ -52,8 +53,7 @@ class PaymentMethodsScreen extends StatelessWidget {
           return Center(
             child: Text(
               "No Payment Details have been added",
-              style: GoogleFonts.nunitoSans(
-                fontSize: 14,
+              style: kNunitoSans14.copyWith(
                 color: kGrey,
               ),
             ),
@@ -107,8 +107,7 @@ class PaymentMethodsScreen extends StatelessWidget {
                       ),
                       Text(
                         "Use as default payment method",
-                        style: GoogleFonts.nunitoSans(
-                          fontSize: 14,
+                        style: kNunitoSans14.copyWith(
                           color: kRaisinBlack,
                         ),
                       )

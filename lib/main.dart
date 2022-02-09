@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:timberr/constants.dart';
 import 'package:timberr/private_keys.dart';
@@ -10,11 +9,12 @@ import 'package:timberr/wrapper.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Supabase.initialize(
-    url: 'https://wzicmnwevvqgzttnmvou.supabase.co',
+    url: supabaseUrl,
     anonKey: supabaseAnonKey,
   );
   SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+    const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
+  );
   runApp(const TimberrApp());
 }
 
@@ -25,15 +25,12 @@ class TimberrApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Timberr Furniture Store',
       theme: ThemeData(
-        fontFamily: GoogleFonts.nunitoSans().fontFamily,
+        fontFamily: "NunitoSans",
         appBarTheme: const AppBarTheme(color: Colors.white, elevation: 0),
         scaffoldBackgroundColor: Colors.white,
         textButtonTheme: TextButtonThemeData(
-          style: TextButton.styleFrom(
-            primary: kOffBlack,
-          ),
+          style: TextButton.styleFrom(primary: kOffBlack),
         ),
       ),
       home: const Wrapper(),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:timberr/constants.dart';
 
 class PaymentCardView extends StatelessWidget {
@@ -64,15 +63,14 @@ class PaymentCardView extends StatelessWidget {
           RichText(
             text: TextSpan(
               text: "* * * *  * * * *  * * * *  ",
-              style: GoogleFonts.nunitoSans(
-                fontSize: 20,
+              style: kNunitoSansBold20.copyWith(
                 fontWeight: FontWeight.w600,
                 color: Colors.white,
               ),
               children: [
                 TextSpan(
                   text: lastFourDigits,
-                  style: GoogleFonts.nunitoSans(
+                  style: const TextStyle(
                     fontWeight: FontWeight.normal,
                   ),
                 ),
@@ -85,18 +83,13 @@ class PaymentCardView extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     "Card Holder Name",
-                    style: GoogleFonts.nunitoSans(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white.withOpacity(0.8),
-                    ),
+                    style: kNunitoSansSemiBold12,
                   ),
                   Text(
                     cardHolderName,
-                    style: GoogleFonts.nunitoSans(
-                      fontSize: 14,
+                    style: kNunitoSans14.copyWith(
                       fontWeight: FontWeight.w600,
                       color: Colors.white,
                     ),
@@ -106,18 +99,13 @@ class PaymentCardView extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     "Expiry Date",
-                    style: GoogleFonts.nunitoSans(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white.withOpacity(0.8),
-                    ),
+                    style: kNunitoSansSemiBold12,
                   ),
                   Text(
                     expiryDateString,
-                    style: GoogleFonts.nunitoSans(
-                      fontSize: 14,
+                    style: kNunitoSans14.copyWith(
                       fontWeight: FontWeight.w600,
                       color: Colors.white,
                     ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:timberr/constants.dart';
 
 class CustomDropdownBox extends StatefulWidget {
@@ -51,10 +50,7 @@ class _CustomDropdownBoxState extends State<CustomDropdownBox> {
         children: [
           Text(
             widget.headerText,
-            style: GoogleFonts.nunitoSans(
-              fontSize: 12,
-              color: kTrolleyGrey,
-            ),
+            style: kNunitoSans12TrolleyGrey,
           ),
           const SizedBox(height: 4),
           DropdownButtonFormField(
@@ -64,11 +60,7 @@ class _CustomDropdownBoxState extends State<CustomDropdownBox> {
               contentPadding: EdgeInsets.zero,
               isCollapsed: true,
               hintText: widget.hintText,
-              hintStyle: GoogleFonts.nunitoSans(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: kNoghreiSilver,
-              ),
+              hintStyle: kNunitoSansSemiBold16NorgheiSilver,
               border: InputBorder.none,
             ),
             items: widget.items,

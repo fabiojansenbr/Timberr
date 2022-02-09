@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:timberr/constants.dart';
 import 'package:timberr/models/product.dart';
 import 'package:timberr/services/search_service.dart';
@@ -43,8 +42,7 @@ class ProductSearchDelegate extends SearchDelegate {
               return Center(
                 child: Text(
                   "No Matching Products Found 🥺",
-                  style: GoogleFonts.nunitoSans(
-                    fontSize: 16,
+                  style: kNunitoSans16.copyWith(
                     color: kGrey,
                   ),
                 ),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:timberr/constants.dart';
 import 'package:timberr/controllers/cart_controller.dart';
 import 'package:timberr/controllers/favorites_controller.dart';
@@ -14,6 +13,24 @@ class FavoriteScreen extends StatelessWidget {
   FavoriteScreen({Key? key}) : super(key: key);
   final FavoritesController _favoritesController = Get.find();
   final CartController _cartController = Get.find();
+  void _onCartTap() {
+    Get.to(
+      () => CartScreen(),
+      transition: Transition.fade,
+    );
+  }
+
+  void _addAllToCart() async {
+    for (int i = 0; i < _favoritesController.favoritesList.length; i++) {
+      await _cartController.addToCart(
+          _favoritesController.favoritesList.elementAt(i),
+          _favoritesController.favoritesList.elementAt(i).colorsList[0],
+          showSnackbar: false);
+    }
+    Get.snackbar(
+        "Added to Cart", "All the favorite items have been added to the cart");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,19 +41,14 @@ class FavoriteScreen extends StatelessWidget {
           },
           icon: SvgPicture.asset("assets/icons/search_icon.svg"),
         ),
-        title: Text(
+        title: const Text(
           "FAVORITE",
-          style: kMerriweatherBold,
+          style: kMerriweatherBold16,
         ),
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: () {
-              Get.to(
-                () => CartScreen(),
-                transition: Transition.fade,
-              );
-            },
+            onPressed: _onCartTap,
             icon: SvgPicture.asset("assets/icons/cart_icon.svg"),
           )
         ],
@@ -45,7 +57,8 @@ class FavoriteScreen extends StatelessWidget {
       body: Obx(() {
         if (_favoritesController.favoritesList.isEmpty) {
           return const Center(
-              child: Text("No Product added to favorites List"));
+            child: Text("No Product added to favorites List"),
+          );
         } else {
           return Stack(
             children: [
@@ -73,26 +86,10 @@ class FavoriteScreen extends StatelessWidget {
                 right: 20,
                 bottom: 10,
                 child: ElevatedButton(
-                  onPressed: () async {
-                    for (int i = 0;
-                        i < _favoritesController.favoritesList.length;
-                        i++) {
-                      await _cartController.addToCart(
-                          _favoritesController.favoritesList.elementAt(i),
-                          _favoritesController.favoritesList
-                              .elementAt(i)
-                              .colorsList[0],
-                          showSnackbar: false);
-                    }
-                    Get.snackbar("Added to Cart",
-                        "All the favorite items have been added to the cart");
-                  },
+                  onPressed: _addAllToCart,
                   child: Text(
                     "Add all to my cart",
-                    style: GoogleFonts.nunitoSans(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 18,
-                    ),
+                    style: kNunitoSansSemiBold18.copyWith(color: Colors.white),
                   ),
                   style: ElevatedButton.styleFrom(
                     elevation: 8,

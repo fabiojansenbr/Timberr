@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:timberr/constants.dart';
 
 class MyReviewsScreen extends StatelessWidget {
@@ -22,9 +21,9 @@ class MyReviewsScreen extends StatelessWidget {
           ),
         ),
         centerTitle: true,
-        title: Text(
+        title: const Text(
           "MY REVIEWS",
-          style: kMerriweatherBold,
+          style: kMerriweatherBold16,
         ),
         actions: [
           IconButton(
@@ -74,18 +73,14 @@ class MyReviewsScreen extends StatelessWidget {
                       children: [
                         Text(
                           "Coffee Chair",
-                          style: GoogleFonts.nunitoSans(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
+                          style: kNunitoSansSemiBold16.copyWith(
                             color: kGraniteGrey,
                           ),
                         ),
                         Text(
                           "\$ 50.00",
-                          style: GoogleFonts.nunitoSans(
-                            fontSize: 16,
+                          style: kNunitoSansSemiBold16.copyWith(
                             fontWeight: FontWeight.w800,
-                            color: kOffBlack,
                           ),
                         ),
                       ],
@@ -104,21 +99,15 @@ class MyReviewsScreen extends StatelessWidget {
                         ),
                       ),
                     const Spacer(),
-                    Text(
+                    const Text(
                       "22/04/2001",
-                      style: GoogleFonts.nunitoSans(
-                        fontSize: 12,
-                        color: kGrey,
-                      ),
+                      style: kNunitoSans12Grey,
                     ),
                   ],
                 ),
-                Text(
+                const Text(
                   "Nice Furniture with good delivery. The delivery time is very fast. Then products look like exactly the picture in the app. Besides, color is also the same and quality is very good despite very cheap price",
-                  style: GoogleFonts.nunitoSans(
-                    fontSize: 14,
-                    color: kOffBlack,
-                  ),
+                  style: kNunitoSans14,
                   maxLines: 5,
                   overflow: TextOverflow.ellipsis,
                 ),

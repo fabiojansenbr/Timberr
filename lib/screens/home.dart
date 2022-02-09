@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:timberr/constants.dart';
 import 'package:timberr/controllers/home_controller.dart';
 import 'package:timberr/screens/cart/cart_screen.dart';
@@ -13,6 +12,13 @@ import 'package:timberr/widgets/tiles/product_grid_tile.dart';
 class Home extends StatelessWidget {
   Home({Key? key}) : super(key: key);
   final HomeController _controller = Get.find();
+  void _onCartTap() {
+    Get.to(
+      () => CartScreen(),
+      transition: Transition.fade,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,17 +42,15 @@ class Home extends StatelessWidget {
               children: [
                 Text(
                   'Make home',
-                  style: GoogleFonts.gelasio(
+                  style: kGelasio18.copyWith(
                     color: kTinGrey,
-                    fontSize: 18,
                   ),
                 ),
                 Text(
                   'BEAUTIFUL',
-                  style: GoogleFonts.gelasio(
-                    color: kOffBlack,
-                    fontSize: 18,
+                  style: kGelasio18.copyWith(
                     fontWeight: FontWeight.bold,
+                    color: kOffBlack,
                   ),
                 ),
               ],
@@ -54,12 +58,7 @@ class Home extends StatelessWidget {
             centerTitle: true,
             actions: [
               IconButton(
-                onPressed: () {
-                  Get.to(
-                    () => CartScreen(),
-                    transition: Transition.fade,
-                  );
-                },
+                onPressed: _onCartTap,
                 icon: SvgPicture.asset(
                   'assets/icons/cart_icon.svg',
                   color: kGrey,

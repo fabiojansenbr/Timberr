@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:timberr/constants.dart';
 
 class SettingsTextBox extends StatelessWidget {
@@ -32,15 +31,11 @@ class SettingsTextBox extends StatelessWidget {
         children: [
           Text(
             fieldName,
-            style: GoogleFonts.nunitoSans(
-              fontSize: 12,
-              color: kTrolleyGrey,
-            ),
+            style: kNunitoSans12TrolleyGrey,
           ),
           Text(
             value,
-            style: GoogleFonts.nunitoSans(
-              fontSize: 14,
+            style: kNunitoSans14.copyWith(
               fontWeight: FontWeight.w600,
               color: kRaisinBlack,
             ),

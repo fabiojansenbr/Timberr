@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:timberr/constants.dart';
 import 'package:timberr/controllers/auth_controller.dart';
 import 'package:timberr/screens/authentication/register_screen.dart';
@@ -17,6 +16,72 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   String email = '', password = '';
   bool _showPassword = false;
+
+  void _emailOnChanged(String val) {
+    email = val;
+  }
+
+  String? _emailValidator(String? val) {
+    return (GetUtils.isEmail(val ?? '')) ? null : 'Please enter your email';
+  }
+
+  void _passwordOnChanged(String val) {
+    password = val;
+  }
+
+  String? _passwordValidator(String? val) {
+    if (val?.isEmpty ?? true) {
+      return 'Please enter a password';
+    } else {
+      if (val!.length < 6) {
+        return 'Password should be at least 6 characters long';
+      }
+      return null;
+    }
+  }
+
+  void _togglePasswordVisibility() {
+    setState(() {
+      _showPassword = !_showPassword;
+    });
+  }
+
+  void _forgotPassword() async {
+    if (GetUtils.isEmail(email)) {
+      await _authController.forgotPassword(email);
+    } else {
+      Get.dialog(
+        AlertDialog(
+          title: const Text("Error"),
+          content: const Text("Please enter a valid email address"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                navigator?.pop();
+              },
+              child: const Text("Ok"),
+            )
+          ],
+        ),
+      );
+    }
+  }
+
+  void _signIn() {
+    if (_formKey.currentState!.validate()) {
+      _authController.signIn(email, password);
+    }
+  }
+
+  void _toRegisterScreen() {
+    Get.off(
+      () => const RegisterScreen(),
+      transition: Transition.cupertino,
+      duration: const Duration(milliseconds: 600),
+      curve: Curves.easeOut,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,24 +114,18 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 30, bottom: 10, top: 30),
+              const Padding(
+                padding: EdgeInsets.only(left: 30, bottom: 10, top: 30),
                 child: Text(
                   "Hello !",
-                  style: GoogleFonts.merriweather(
-                    fontSize: 30,
-                    color: kTinGrey,
-                  ),
+                  style: kMerriweather30TinGrey,
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 30, bottom: 30),
+              const Padding(
+                padding: EdgeInsets.only(left: 30, bottom: 30),
                 child: Text(
                   "WELCOME BACK",
-                  style: kMerriweatherBold.copyWith(
-                    fontSize: 24,
-                    letterSpacing: 1.2,
-                  ),
+                  style: kMerriweatherBold24,
                 ),
               ),
               Form(
@@ -90,14 +149,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: TextFormField(
                           keyboardType: TextInputType.emailAddress,
                           textInputAction: TextInputAction.next,
-                          onChanged: (val) {
-                            email = val;
-                          },
-                          validator: (val) {
-                            return (GetUtils.isEmail(val ?? ''))
-                                ? null
-                                : 'Please enter your email';
-                          },
+                          onChanged: _emailOnChanged,
+                          validator: _emailValidator,
                           decoration:
                               inputDecorationConst.copyWith(labelText: "Email"),
                         ),
@@ -105,19 +158,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       Padding(
                         padding: const EdgeInsets.only(left: 30, top: 30),
                         child: TextFormField(
-                          onChanged: (val) {
-                            password = val;
-                          },
-                          validator: (val) {
-                            if (val?.isEmpty ?? true) {
-                              return 'Please enter a password';
-                            } else {
-                              if (val!.length < 6) {
-                                return 'Password should be at least 6 characters long';
-                              }
-                              return null;
-                            }
-                          },
+                          onChanged: _passwordOnChanged,
+                          validator: _passwordValidator,
                           obscureText: !_showPassword,
                           enableSuggestions: false,
                           autocorrect: false,
@@ -127,11 +169,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               padding:
                                   const EdgeInsets.only(top: 25, right: 15),
                               child: GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    _showPassword = !_showPassword;
-                                  });
-                                },
+                                onTap: _togglePasswordVisibility,
                                 child: SvgPicture.asset(
                                   "assets/icons/password_visible.svg",
                                   height: 15,
@@ -146,41 +184,15 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       const SizedBox(height: 20),
                       TextButton(
-                        onPressed: () async {
-                          if (GetUtils.isEmail(email)) {
-                            await _authController.forgotPassword(email);
-                          } else {
-                            Get.dialog(AlertDialog(
-                              title: const Text("Error"),
-                              content: const Text(
-                                  "Please enter a valid email address"),
-                              actions: [
-                                TextButton(
-                                  onPressed: () {
-                                    navigator?.pop();
-                                  },
-                                  child: const Text("Ok"),
-                                )
-                              ],
-                            ));
-                          }
-                        },
-                        child: Text(
+                        onPressed: _forgotPassword,
+                        child: const Text(
                           "Forgot Password",
-                          style: GoogleFonts.nunitoSans(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                            color: kOffBlack,
-                          ),
+                          style: kNunitoSansSemiBold18,
                         ),
                       ),
                       const SizedBox(height: 20),
                       GestureDetector(
-                        onTap: () {
-                          if (_formKey.currentState!.validate()) {
-                            _authController.signIn(email, password);
-                          }
-                        },
+                        onTap: _signIn,
                         child: Container(
                           height: 50,
                           width: double.infinity,
@@ -199,26 +211,18 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: Center(
                               child: Text(
                             "Sign In",
-                            style: GoogleFonts.nunitoSans(
+                            style: kNunitoSansSemiBold18.copyWith(
                               color: Colors.white,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 18,
                             ),
                           )),
                         ),
                       ),
                       const SizedBox(height: 20),
                       TextButton(
-                        onPressed: () {
-                          Get.off(() => const RegisterScreen());
-                        },
-                        child: Text(
+                        onPressed: _toRegisterScreen,
+                        child: const Text(
                           "SIGN UP",
-                          style: GoogleFonts.nunitoSans(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                            color: kOffBlack,
-                          ),
+                          style: kNunitoSansSemiBold18,
                         ),
                       ),
                       const SizedBox(height: 20),

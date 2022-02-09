@@ -14,16 +14,22 @@ class ProductGridTile extends StatelessWidget {
   ProductGridTile({Key? key, required this.product, this.heroMode = true})
       : super(key: key);
 
+  void _productOnTap() {
+    Get.to(
+      () => ProductScreen(product: product),
+      duration: const Duration(milliseconds: 500),
+      transition: Transition.fadeIn,
+    );
+  }
+
+  void _addToCart() {
+    _cartController.addToCart(product, product.colorsList[0]);
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Get.to(
-          () => ProductScreen(product: product),
-          duration: const Duration(milliseconds: 500),
-          transition: Transition.fadeIn,
-        );
-      },
+      onTap: _productOnTap,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -61,10 +67,7 @@ class ProductGridTile extends StatelessWidget {
                         right: 12,
                         bottom: 10,
                         child: GestureDetector(
-                          onTap: () {
-                            _cartController.addToCart(
-                                product, product.colorsList[0]);
-                          },
+                          onTap: _addToCart,
                           child: Container(
                             height: 30,
                             width: 30,
@@ -90,17 +93,14 @@ class ProductGridTile extends StatelessWidget {
           const SizedBox(height: 10),
           Text(
             product.name,
-            style: const TextStyle(
-              fontSize: 14,
+            style: kNunitoSans14.copyWith(
               color: kGraniteGrey,
             ),
           ),
           const SizedBox(height: 5),
           Text(
             '\$ ${product.price}.00',
-            style: const TextStyle(
-              color: kOffBlack,
-              fontSize: 14,
+            style: kNunitoSans14.copyWith(
               fontWeight: FontWeight.bold,
             ),
           )

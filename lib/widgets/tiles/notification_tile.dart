@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:timberr/constants.dart';
 
 class NotificationTile extends StatelessWidget {
@@ -40,8 +39,7 @@ class NotificationTile extends StatelessWidget {
                   children: [
                     Text(
                       name,
-                      style: GoogleFonts.nunitoSans(
-                        fontSize: 12,
+                      style: kNunitoSans12Grey.copyWith(
                         color: kOffBlack,
                         fontWeight: FontWeight.bold,
                       ),
@@ -50,10 +48,7 @@ class NotificationTile extends StatelessWidget {
                     ),
                     Text(
                       description,
-                      style: GoogleFonts.nunitoSans(
-                        fontSize: 10,
-                        color: kGrey,
-                      ),
+                      style: kNunitoSans10Grey,
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -69,8 +64,7 @@ class NotificationTile extends StatelessWidget {
             right: 20,
             child: Text(
               "New",
-              style: GoogleFonts.nunitoSans(
-                fontSize: 14,
+              style: kNunitoSans14.copyWith(
                 fontWeight: FontWeight.w800,
                 color: kCrayolaGreen,
               ),

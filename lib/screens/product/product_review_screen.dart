@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:timberr/constants.dart';
 import 'package:timberr/widgets/cards/product_review_card.dart';
 
@@ -23,9 +22,9 @@ class ProductReviewScreen extends StatelessWidget {
           ),
         ),
         centerTitle: true,
-        title: Text(
+        title: const Text(
           "RATING & REVIEW",
-          style: kMerriweatherBold,
+          style: kMerriweatherBold16,
         ),
       ),
       body: Column(
@@ -52,8 +51,7 @@ class ProductReviewScreen extends StatelessWidget {
                     children: [
                       Text(
                         "Minimal Stand",
-                        style: GoogleFonts.nunitoSans(
-                          fontSize: 14,
+                        style: kNunitoSans14.copyWith(
                           color: kGraniteGrey,
                         ),
                       ),
@@ -71,21 +69,13 @@ class ProductReviewScreen extends StatelessWidget {
                           const SizedBox(width: 10),
                           const Text(
                             '4.5',
-                            style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                              color: kOffBlack,
-                            ),
+                            style: kNunitoSansBold24,
                           ),
                         ],
                       ),
-                      Text(
+                      const Text(
                         "10 reviews",
-                        style: GoogleFonts.nunitoSans(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                          color: kOffBlack,
-                        ),
+                        style: kNunitoSansSemiBold18,
                       )
                     ],
                   ),

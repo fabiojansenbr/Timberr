@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:timberr/constants.dart';
 
 class SettingRowTile extends StatelessWidget {
@@ -30,9 +29,7 @@ class SettingRowTile extends StatelessWidget {
         children: [
           Text(
             fieldName,
-            style: GoogleFonts.nunitoSans(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
+            style: kNunitoSansSemiBold16.copyWith(
               color: kRaisinBlack,
             ),
           ),

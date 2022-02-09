@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:timberr/constants.dart';
 import 'package:timberr/widgets/input/settings_text_box.dart';
 import 'package:timberr/widgets/tiles/settings_row_tile.dart';
@@ -26,9 +25,9 @@ class SettingsScreen extends StatelessWidget {
           ),
         ),
         centerTitle: true,
-        title: Text(
+        title: const Text(
           "SETTING",
-          style: kMerriweatherBold,
+          style: kMerriweatherBold16,
         ),
       ),
       body: ListView(
@@ -38,13 +37,9 @@ class SettingsScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
+              const Text(
                 "Personal Information",
-                style: GoogleFonts.nunitoSans(
-                  fontSize: 16,
-                  color: kTinGrey,
-                  fontWeight: FontWeight.w600,
-                ),
+                style: kNunitoSansSemiBold16TinGrey,
               ),
               IconButton(
                 onPressed: () {},
@@ -65,13 +60,9 @@ class SettingsScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
+              const Text(
                 "Password",
-                style: GoogleFonts.nunitoSans(
-                  fontSize: 16,
-                  color: kTinGrey,
-                  fontWeight: FontWeight.w600,
-                ),
+                style: kNunitoSansSemiBold16TinGrey,
               ),
               IconButton(
                 onPressed: () {},
@@ -84,13 +75,9 @@ class SettingsScreen extends StatelessWidget {
             value: "*************",
           ),
           const SizedBox(height: 25),
-          Text(
+          const Text(
             "Notifications",
-            style: GoogleFonts.nunitoSans(
-              fontSize: 16,
-              color: kTinGrey,
-              fontWeight: FontWeight.w600,
-            ),
+            style: kNunitoSansSemiBold16TinGrey,
           ),
           const SizedBox(height: 10),
           SettingRowTile(
@@ -120,13 +107,9 @@ class SettingsScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 25),
-          Text(
+          const Text(
             "Help Center",
-            style: GoogleFonts.nunitoSans(
-              fontSize: 16,
-              color: kTinGrey,
-              fontWeight: FontWeight.w600,
-            ),
+            style: kNunitoSansSemiBold16TinGrey,
           ),
           const SizedBox(height: 10),
           SettingRowTile(

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:timberr/constants.dart';
 import 'package:timberr/controllers/address_controller.dart';
 import 'package:timberr/controllers/card_details_controller.dart';
@@ -18,6 +17,51 @@ class ProfileScreen extends StatelessWidget {
   ProfileScreen({Key? key}) : super(key: key);
   final _userController = Get.put(UserController());
   final _cardDetailsController = Get.put(CardDetailsController());
+  void _toSettingsScreen() {
+    Get.to(
+      () => const SettingsScreen(),
+      transition: Transition.cupertino,
+      duration: const Duration(milliseconds: 600),
+      curve: Curves.easeOut,
+    );
+  }
+
+  void _toReviewScreen() {
+    Get.to(
+      () => const MyReviewsScreen(),
+      transition: Transition.cupertino,
+      duration: const Duration(milliseconds: 600),
+      curve: Curves.easeOut,
+    );
+  }
+
+  void _toPaymentMethodsScreen() {
+    Get.to(
+      () => PaymentMethodsScreen(),
+      transition: Transition.cupertino,
+      duration: const Duration(milliseconds: 600),
+      curve: Curves.easeOut,
+    );
+  }
+
+  void _toShippingAddressScreen() {
+    Get.to(
+      () => const ShippingAddressScreen(),
+      transition: Transition.cupertino,
+      duration: const Duration(milliseconds: 600),
+      curve: Curves.easeOut,
+    );
+  }
+
+  void _toOrdersScreen() {
+    Get.to(
+      () => const OrdersScreen(),
+      transition: Transition.cupertino,
+      duration: const Duration(milliseconds: 600),
+      curve: Curves.easeOut,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,9 +74,9 @@ class ProfileScreen extends StatelessWidget {
           ),
         ),
         centerTitle: true,
-        title: Text(
+        title: const Text(
           "PROFILE",
-          style: kMerriweatherBold,
+          style: kMerriweatherBold16,
         ),
         actions: [
           IconButton(
@@ -77,16 +121,11 @@ class ProfileScreen extends StatelessWidget {
                     children: [
                       Text(
                         _controller.name,
-                        style: GoogleFonts.nunitoSans(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: kOffBlack,
-                        ),
+                        style: kNunitoSansBold20,
                       ),
                       Text(
                         _controller.email,
-                        style: GoogleFonts.nunitoSans(
-                          fontSize: 14,
+                        style: kNunitoSans14.copyWith(
                           color: kGrey,
                         ),
                       ),
@@ -99,78 +138,44 @@ class ProfileScreen extends StatelessWidget {
             ProfileTile(
               name: "My Orders",
               description: "Already have 10 orders",
-              onTap: () {
-                Get.to(
-                  () => const OrdersScreen(),
-                  transition: Transition.cupertino,
-                  duration: const Duration(milliseconds: 600),
-                  curve: Curves.easeOut,
-                );
-              },
+              onTap: _toOrdersScreen,
             ),
             const Spacer(),
             GetBuilder<AddressController>(
-                init: AddressController(),
-                builder: (_addressController) {
-                  String addressCount =
-                      _addressController.addressList.length.toString();
-                  if (addressCount != '0' && addressCount.length == 1) {
-                    addressCount = '0' + addressCount;
-                  }
-                  return ProfileTile(
-                    name: "Shipping Addresses",
-                    description: "$addressCount Addresses",
-                    onTap: () {
-                      Get.to(
-                        () => const ShippingAddressScreen(),
-                        transition: Transition.cupertino,
-                        duration: const Duration(milliseconds: 600),
-                        curve: Curves.easeOut,
-                      );
-                    },
-                  );
-                }),
+              init: AddressController(),
+              builder: (_addressController) {
+                String addressCount =
+                    _addressController.addressList.length.toString();
+                if (addressCount != '0' && addressCount.length == 1) {
+                  addressCount = '0' + addressCount;
+                }
+                return ProfileTile(
+                  name: "Shipping Addresses",
+                  description: "$addressCount Addresses",
+                  onTap: _toShippingAddressScreen,
+                );
+              },
+            ),
             const Spacer(),
             Obx(() {
               return ProfileTile(
                 name: "Payment Method",
                 description:
                     "You have ${_cardDetailsController.cardDetailList.length} cards",
-                onTap: () {
-                  Get.to(
-                    () => PaymentMethodsScreen(),
-                    transition: Transition.cupertino,
-                    duration: const Duration(milliseconds: 600),
-                    curve: Curves.easeOut,
-                  );
-                },
+                onTap: _toPaymentMethodsScreen,
               );
             }),
             const Spacer(),
             ProfileTile(
               name: "My Reviews",
               description: "Reviews for 5 items",
-              onTap: () {
-                Get.to(
-                  () => const MyReviewsScreen(),
-                  transition: Transition.cupertino,
-                  duration: const Duration(milliseconds: 600),
-                  curve: Curves.easeOut,
-                );
-              },
+              onTap: _toReviewScreen,
             ),
             const Spacer(),
             ProfileTile(
               name: "Setting",
               description: "Notification, Password, FAQ, Contact",
-              onTap: () {
-                Get.to(
-                  () => const SettingsScreen(),
-                  transition: Transition.cupertino,
-                  duration: const Duration(milliseconds: 600),
-                  curve: Curves.easeOut,
-                );
-              },
+              onTap: _toSettingsScreen,
             ),
             const Spacer(flex: 3),
           ],

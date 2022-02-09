@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:timberr/constants.dart';
 import 'package:timberr/controllers/cart_controller.dart';
 import 'package:timberr/screens/cart/check_out_screen.dart';
@@ -10,6 +9,18 @@ import 'package:timberr/widgets/tiles/cart_list_tile.dart';
 class CartScreen extends StatelessWidget {
   CartScreen({Key? key}) : super(key: key);
   final CartController _controller = Get.find();
+
+  void _toCheckOutScreen() {
+    Get.to(
+      () => CheckOutScreen(
+        orderAmount: _controller.total.value,
+      ),
+      transition: Transition.cupertino,
+      duration: const Duration(milliseconds: 600),
+      curve: Curves.easeOut,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,9 +36,9 @@ class CartScreen extends StatelessWidget {
           ),
         ),
         centerTitle: true,
-        title: Text(
+        title: const Text(
           "MY CART",
-          style: kMerriweatherBold,
+          style: kMerriweatherBold16,
         ),
       ),
       body: Obx(() {
@@ -72,8 +83,7 @@ class CartScreen extends StatelessWidget {
                     ],
                   ),
                   child: TextField(
-                    style: GoogleFonts.nunitoSans(
-                        fontSize: 16, fontWeight: FontWeight.w600),
+                    style: kNunitoSansSemiBold16,
                     maxLength: 6,
                     decoration: InputDecoration(
                       counter: const Offstage(),
@@ -106,9 +116,8 @@ class CartScreen extends StatelessWidget {
                         ),
                       ),
                       hintText: "Enter your Promo Code",
-                      hintStyle: GoogleFonts.nunitoSans(
+                      hintStyle: kNunitoSans16.copyWith(
                         fontWeight: FontWeight.normal,
-                        fontSize: 16,
                         height: 1,
                         color: kBasaltGrey,
                       ),
@@ -122,36 +131,21 @@ class CartScreen extends StatelessWidget {
                     children: [
                       Text(
                         "Total: ",
-                        style: GoogleFonts.nunitoSans(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
+                        style: kNunitoSansBold20.copyWith(
                           color: kGrey,
                         ),
                       ),
                       Obx(() {
                         return Text(
                           "\$ ${_controller.total.value}.00",
-                          style: GoogleFonts.nunitoSans(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: kOffBlack,
-                          ),
+                          style: kNunitoSansBold20,
                         );
                       })
                     ],
                   ),
                 ),
                 CustomElevatedButton(
-                  onTap: () {
-                    Get.to(
-                      () => CheckOutScreen(
-                        orderAmount: _controller.total.value,
-                      ),
-                      transition: Transition.cupertino,
-                      duration: const Duration(milliseconds: 600),
-                      curve: Curves.easeOut,
-                    );
-                  },
+                  onTap: _toCheckOutScreen,
                   text: 'CHECK OUT',
                 ),
                 const SizedBox(height: 20),

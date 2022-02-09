@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:timberr/constants.dart';
 import 'package:timberr/widgets/tabbed/orders_tab_bar.dart';
 
@@ -25,9 +24,9 @@ class OrdersScreen extends StatelessWidget {
               ),
             ),
             centerTitle: true,
-            title: Text(
+            title: const Text(
               "MY ORDERS",
-              style: kMerriweatherBold,
+              style: kMerriweatherBold16,
             ),
             bottom: const OrdersTabBar(index: 0),
             floating: true,
@@ -61,18 +60,13 @@ class OrdersScreen extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
+                          const Text(
                             "Order no 38546",
-                            style: GoogleFonts.nunitoSans(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: kOffBlack,
-                            ),
+                            style: kNunitoSansSemiBold16,
                           ),
                           Text(
                             "25/12/2021",
-                            style: GoogleFonts.nunitoSans(
-                              fontSize: 14,
+                            style: kNunitoSans14.copyWith(
                               color: kTinGrey,
                             ),
                           )
@@ -86,39 +80,23 @@ class OrdersScreen extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(20, 15, 20, 20),
                       child: Row(
-                        children: [
+                        children: const [
                           Text(
                             "Quantity: ",
-                            style: GoogleFonts.nunitoSans(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: kTinGrey,
-                            ),
+                            style: kNunitoSansSemiBold16TinGrey,
                           ),
                           Text(
                             "03",
-                            style: GoogleFonts.nunitoSans(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: kOffBlack,
-                            ),
+                            style: kNunitoSansSemiBold16,
                           ),
-                          const Spacer(),
+                          Spacer(),
                           Text(
                             "Total amount: ",
-                            style: GoogleFonts.nunitoSans(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: kTinGrey,
-                            ),
+                            style: kNunitoSansSemiBold16TinGrey,
                           ),
                           Text(
                             "\$150",
-                            style: GoogleFonts.nunitoSans(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: kOffBlack,
-                            ),
+                            style: kNunitoSansSemiBold16,
                           ),
                         ],
                       ),
@@ -138,9 +116,7 @@ class OrdersScreen extends StatelessWidget {
                           child: Center(
                             child: Text(
                               "Detail",
-                              style: GoogleFonts.nunitoSans(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
+                              style: kNunitoSansSemiBold16.copyWith(
                                 color: Colors.white,
                               ),
                             ),
@@ -149,9 +125,7 @@ class OrdersScreen extends StatelessWidget {
                         const Spacer(),
                         Text(
                           "Delivered",
-                          style: GoogleFonts.nunitoSans(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
+                          style: kNunitoSansSemiBold16.copyWith(
                             color: kCrayolaGreen,
                           ),
                         ),

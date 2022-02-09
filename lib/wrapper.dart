@@ -45,7 +45,7 @@ class AuthState<T extends StatefulWidget> extends SupabaseAuthState<T> {
       Get.put(HomeController(), permanent: true);
       Get.put(FavoritesController(), permanent: true);
       Get.put(CartController(), permanent: true);
-      Get.off(() => SplashScreen());
+      Get.off(() => SplashScreen(), transition: Transition.fadeIn);
     }
   }
 

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:timberr/constants.dart';
 import 'package:timberr/controllers/auth_controller.dart';
 import 'package:timberr/screens/authentication/login_screen.dart';
@@ -17,6 +16,67 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _formKey = GlobalKey<FormState>();
   String name = '', email = '', password = '', confirmPassword = '';
   bool _showPassword = false;
+
+  void _nameOnChanged(String val) {
+    name = val;
+  }
+
+  String? _nameValidator(String? val) {
+    return name.isNotEmpty ? null : 'Please enter your name';
+  }
+
+  void _emailOnChanged(String val) {
+    email = val;
+  }
+
+  String? _emailValidator(String? val) {
+    return (GetUtils.isEmail(val ?? '')) ? null : 'Please enter your email';
+  }
+
+  void _passwordOnChanged(String val) {
+    password = val;
+  }
+
+  String? _passwordValidator(String? val) {
+    if (val?.isEmpty ?? true) {
+      return 'Please enter a password';
+    } else {
+      if (val!.length < 6) {
+        return 'Password should be at least 6 characters long';
+      }
+      return null;
+    }
+  }
+
+  void _confirmPasswordOnChanged(String val) {
+    confirmPassword = val;
+  }
+
+  String? _confirmPasswordValidator(String? val) {
+    return (val == password) ? null : "Passwords do not match";
+  }
+
+  void _togglePasswordVisibility() {
+    setState(() {
+      _showPassword = !_showPassword;
+    });
+  }
+
+  void _signUp() {
+    if (_formKey.currentState!.validate()) {
+      _authController.signUp(name, email, password);
+    }
+  }
+
+  void _toLoginScreen() {
+    Get.off(
+      () => const LoginScreen(),
+      transition: Transition.cupertino,
+      duration: const Duration(milliseconds: 600),
+      curve: Curves.easeOut,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,14 +109,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 20, left: 30, bottom: 30),
+              const Padding(
+                padding: EdgeInsets.only(top: 20, left: 30, bottom: 30),
                 child: Text(
                   "WELCOME",
-                  style: kMerriweatherBold.copyWith(
-                    fontSize: 24,
-                    letterSpacing: 1.2,
-                  ),
+                  style: kMerriweatherBold24,
                 ),
               ),
               Form(
@@ -83,14 +140,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         child: TextFormField(
                           textInputAction: TextInputAction.next,
                           textCapitalization: TextCapitalization.words,
-                          onChanged: (val) {
-                            name = val;
-                          },
-                          validator: (val) {
-                            return name.isNotEmpty
-                                ? null
-                                : 'Please enter your name';
-                          },
+                          onChanged: _nameOnChanged,
+                          validator: _nameValidator,
                           decoration:
                               inputDecorationConst.copyWith(labelText: "Name"),
                         ),
@@ -103,14 +154,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         child: TextFormField(
                           keyboardType: TextInputType.emailAddress,
                           textInputAction: TextInputAction.next,
-                          onChanged: (val) {
-                            email = val;
-                          },
-                          validator: (val) {
-                            return (GetUtils.isEmail(val ?? ''))
-                                ? null
-                                : 'Please enter your email';
-                          },
+                          onChanged: _emailOnChanged,
+                          validator: _emailValidator,
                           decoration:
                               inputDecorationConst.copyWith(labelText: "Email"),
                         ),
@@ -118,19 +163,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       Padding(
                         padding: const EdgeInsets.only(left: 30, top: 20),
                         child: TextFormField(
-                          onChanged: (val) {
-                            password = val;
-                          },
-                          validator: (val) {
-                            if (val?.isEmpty ?? true) {
-                              return 'Please enter a password';
-                            } else {
-                              if (val!.length < 6) {
-                                return 'Password should be at least 6 characters long';
-                              }
-                              return null;
-                            }
-                          },
+                          onChanged: _passwordOnChanged,
+                          validator: _passwordValidator,
                           obscureText: !_showPassword,
                           textInputAction: TextInputAction.next,
                           enableSuggestions: false,
@@ -141,11 +175,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               padding:
                                   const EdgeInsets.only(top: 25, right: 15),
                               child: GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    _showPassword = !_showPassword;
-                                  });
-                                },
+                                onTap: _togglePasswordVisibility,
                                 child: SvgPicture.asset(
                                   "assets/icons/password_visible.svg",
                                   height: 15,
@@ -161,14 +191,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       Padding(
                         padding: const EdgeInsets.only(left: 30, top: 20),
                         child: TextFormField(
-                          onChanged: (val) {
-                            confirmPassword = val;
-                          },
-                          validator: (val) {
-                            return (val == password)
-                                ? null
-                                : "Passwords do not match";
-                          },
+                          onChanged: _confirmPasswordOnChanged,
+                          validator: _confirmPasswordValidator,
                           obscureText: !_showPassword,
                           enableSuggestions: false,
                           autocorrect: false,
@@ -178,11 +202,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               padding:
                                   const EdgeInsets.only(top: 25, right: 15),
                               child: GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    _showPassword = !_showPassword;
-                                  });
-                                },
+                                onTap: _togglePasswordVisibility,
                                 child: SvgPicture.asset(
                                   "assets/icons/password_visible.svg",
                                   height: 15,
@@ -197,11 +217,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                       const SizedBox(height: 30),
                       GestureDetector(
-                        onTap: () {
-                          if (_formKey.currentState!.validate()) {
-                            _authController.signUp(name, email, password);
-                          }
-                        },
+                        onTap: _signUp,
                         child: Container(
                           height: 50,
                           width: double.infinity,
@@ -220,10 +236,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           child: Center(
                               child: Text(
                             "SIGN UP",
-                            style: GoogleFonts.nunitoSans(
+                            style: kNunitoSansSemiBold18.copyWith(
                               color: Colors.white,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 18,
                             ),
                           )),
                         ),
@@ -234,22 +248,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         children: [
                           Text(
                             "Already have a account?",
-                            style: GoogleFonts.nunitoSans(
-                              fontSize: 14,
+                            style: kNunitoSans14.copyWith(
                               fontWeight: FontWeight.w600,
                               color: kGrey,
                             ),
                           ),
                           TextButton(
-                            onPressed: () {
-                              Get.off(() => const LoginScreen());
-                            },
+                            onPressed: _toLoginScreen,
                             child: Text(
                               "SIGN IN",
-                              style: GoogleFonts.nunitoSans(
-                                fontSize: 14,
+                              style: kNunitoSans14.copyWith(
                                 fontWeight: FontWeight.bold,
-                                color: kOffBlack,
                               ),
                             ),
                           )

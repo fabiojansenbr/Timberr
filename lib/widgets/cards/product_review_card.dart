@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:timberr/constants.dart';
 
 class ProductReviewCard extends StatelessWidget {
@@ -56,18 +55,13 @@ class ProductReviewCard extends StatelessWidget {
                       children: [
                         Text(
                           reviewerName,
-                          style: GoogleFonts.nunitoSans(
-                            fontSize: 14,
+                          style: kNunitoSans14.copyWith(
                             fontWeight: FontWeight.w600,
-                            color: kOffBlack,
                           ),
                         ),
                         Text(
                           dateString,
-                          style: GoogleFonts.nunitoSans(
-                            fontSize: 12,
-                            color: kGrey,
-                          ),
+                          style: kNunitoSans12Grey,
                         ),
                       ],
                     ),
@@ -87,10 +81,7 @@ class ProductReviewCard extends StatelessWidget {
                     Text(
                       reviewDescription,
                       maxLines: 5,
-                      style: GoogleFonts.nunitoSans(
-                        fontSize: 14,
-                        color: kOffBlack,
-                      ),
+                      style: kNunitoSans14,
                     ),
                   ],
                 ),

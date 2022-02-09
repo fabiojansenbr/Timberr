@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:timberr/constants.dart';
 import 'package:timberr/screens/authentication/login_screen.dart';
 
 class OnBoardingWelcomeScreen extends StatelessWidget {
   const OnBoardingWelcomeScreen({Key? key}) : super(key: key);
+
+  void _toLoginScreen() {
+    Get.to(
+      () => const LoginScreen(),
+      transition: Transition.cupertino,
+      duration: const Duration(milliseconds: 600),
+      curve: Curves.easeOut,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +36,7 @@ class OnBoardingWelcomeScreen extends StatelessWidget {
               children: [
                 Text(
                   'MAKE YOUR',
-                  style: GoogleFonts.gelasio(
+                  style: kGelasio18.copyWith(
                     color: kGraniteGrey,
                     fontSize: 24,
                     letterSpacing: 0.5,
@@ -38,7 +46,7 @@ class OnBoardingWelcomeScreen extends StatelessWidget {
                 const SizedBox(height: 15),
                 Text(
                   'HOME BEAUTIFUL',
-                  style: GoogleFonts.gelasio(
+                  style: kGelasio18.copyWith(
                     color: kOffBlack,
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
@@ -48,9 +56,8 @@ class OnBoardingWelcomeScreen extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 30, top: 25),
                   child: Text(
                     "The best simple place where you discover most wonderful furniture's and make your home beautiful",
-                    style: GoogleFonts.nunitoSans(
+                    style: kNunitoSans18.copyWith(
                       color: kGrey,
-                      fontSize: 18,
                     ),
                   ),
                 ),
@@ -62,9 +69,7 @@ class OnBoardingWelcomeScreen extends StatelessWidget {
               width: double.infinity,
               margin: const EdgeInsets.symmetric(horizontal: 80),
               child: ElevatedButton(
-                onPressed: () {
-                  Get.to(() => const LoginScreen());
-                },
+                onPressed: _toLoginScreen,
                 style: ElevatedButton.styleFrom(
                   primary: kLeadBlack,
                   shadowColor: kOffBlack,
@@ -75,10 +80,8 @@ class OnBoardingWelcomeScreen extends StatelessWidget {
                 ),
                 child: Text(
                   'Get Started',
-                  style: GoogleFonts.gelasio(
-                    fontSize: 18,
+                  style: kGelasio18.copyWith(
                     fontWeight: FontWeight.w600,
-                    color: Colors.white,
                   ),
                 ),
               ),

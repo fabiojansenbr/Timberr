@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:timberr/constants.dart';
 import 'package:timberr/models/address.dart';
 import 'package:timberr/screens/input/edit_shipping_screen.dart';
@@ -13,6 +12,18 @@ class AddressCard extends StatelessWidget {
   const AddressCard(
       {Key? key, this.isEditable = true, this.address, required this.index})
       : super(key: key);
+
+  void _onEditTap() {
+    Get.to(
+      () => EditShippingScreen(
+        initialAddress: address!,
+        index: index,
+      ),
+      transition: Transition.cupertino,
+      duration: const Duration(milliseconds: 600),
+      curve: Curves.easeOut,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,26 +55,12 @@ class AddressCard extends StatelessWidget {
                   curve: Curves.easeIn,
                   child: Text(
                     address?.name ?? "",
-                    style: GoogleFonts.nunitoSans(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: kOffBlack,
-                    ),
+                    style: kNunitoSansBold18,
                   ),
                 ),
                 if (isEditable)
                   GestureDetector(
-                    onTap: () {
-                      Get.to(
-                        () => EditShippingScreen(
-                          initialAddress: address!,
-                          index: index,
-                        ),
-                        transition: Transition.cupertino,
-                        duration: const Duration(milliseconds: 600),
-                        curve: Curves.easeOut,
-                      );
-                    },
+                    onTap: _onEditTap,
                     child: SvgPicture.asset(
                       "assets/icons/edit_icon.svg",
                       height: 24,
@@ -89,8 +86,7 @@ class AddressCard extends StatelessWidget {
               curve: Curves.easeIn,
               child: Text(
                 address?.displayAddress() ?? "",
-                style: GoogleFonts.nunitoSans(
-                  fontSize: 14,
+                style: kNunitoSans14.copyWith(
                   color: kGrey,
                 ),
                 maxLines: 2,

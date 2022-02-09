@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:timberr/constants.dart';
 import 'package:timberr/controllers/cart_controller.dart';
 import 'package:timberr/models/cart_item.dart';
@@ -12,6 +11,26 @@ class CartListTile extends StatelessWidget {
   final CartController _controller = Get.find();
   CartListTile({Key? key, required this.cartItem}) : super(key: key);
 
+  void _productOnTap() {
+    Get.to(
+      () => ProductScreen(product: cartItem.getProduct()),
+      duration: const Duration(milliseconds: 500),
+      transition: Transition.fadeIn,
+    );
+  }
+
+  void _removeFromCart() async {
+    await _controller.removeFromCart(cartItem);
+  }
+
+  void _incrementQuantity() {
+    _controller.incrementQuantity(cartItem);
+  }
+
+  void _decrementQuantity() {
+    _controller.decrementQuantity(cartItem);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -20,13 +39,7 @@ class CartListTile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           GestureDetector(
-            onTap: () {
-              Get.to(
-                () => ProductScreen(product: cartItem.getProduct()),
-                duration: const Duration(milliseconds: 500),
-                transition: Transition.fadeIn,
-              );
-            },
+            onTap: _productOnTap,
             child: Container(
               decoration: BoxDecoration(
                 border: Border.all(color: cartItem.color, width: 2),
@@ -65,16 +78,13 @@ class CartListTile extends StatelessWidget {
                   children: [
                     Text(
                       cartItem.name,
-                      style: GoogleFonts.nunitoSans(
+                      style: kNunitoSans14.copyWith(
                         color: kGraniteGrey,
                         fontWeight: FontWeight.w600,
-                        fontSize: 14,
                       ),
                     ),
                     InkWell(
-                      onTap: () async {
-                        await _controller.removeFromCart(cartItem);
-                      },
+                      onTap: _removeFromCart,
                       customBorder: const CircleBorder(),
                       child: const Icon(
                         Icons.highlight_off,
@@ -87,9 +97,7 @@ class CartListTile extends StatelessWidget {
                 Row(
                   children: [
                     GestureDetector(
-                      onTap: () {
-                        _controller.incrementQuantity(cartItem);
-                      },
+                      onTap: _incrementQuantity,
                       child: Container(
                         height: 30,
                         width: 30,
@@ -107,17 +115,11 @@ class CartListTile extends StatelessWidget {
                     GetBuilder<CartController>(builder: (controller) {
                       return Text(
                         "${cartItem.quantity}",
-                        style: GoogleFonts.nunitoSans(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                          color: kOffBlack,
-                        ),
+                        style: kNunitoSansSemiBold18,
                       );
                     }),
                     GestureDetector(
-                      onTap: () {
-                        _controller.decrementQuantity(cartItem);
-                      },
+                      onTap: _decrementQuantity,
                       child: Container(
                         height: 30,
                         width: 30,
@@ -135,11 +137,7 @@ class CartListTile extends StatelessWidget {
                     const Spacer(),
                     Text(
                       '\$ ${cartItem.price}',
-                      style: GoogleFonts.nunitoSans(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: kOffBlack,
-                      ),
+                      style: kNunitoSansBold16,
                     ),
                   ],
                 ),

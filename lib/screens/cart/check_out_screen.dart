@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:timberr/constants.dart';
 import 'package:timberr/controllers/address_controller.dart';
 import 'package:timberr/controllers/card_details_controller.dart';
@@ -15,6 +14,46 @@ class CheckOutScreen extends StatelessWidget {
   final int orderAmount;
   CheckOutScreen({Key? key, required this.orderAmount}) : super(key: key);
   final _cardDetailController = Get.put(CardDetailsController());
+
+  void _toShippingAddressScreen() {
+    Get.to(
+      () => const ShippingAddressScreen(),
+      transition: Transition.cupertino,
+      duration: const Duration(milliseconds: 600),
+      curve: Curves.easeOut,
+    );
+  }
+
+  void _toPaymentMethodsScreen() {
+    Get.to(
+      () => PaymentMethodsScreen(),
+      transition: Transition.cupertino,
+      duration: const Duration(milliseconds: 600),
+      curve: Curves.easeOut,
+    );
+  }
+
+  void _toOrderSuccessScreen() {
+    Get.to(
+      () => const OrderSuccessScreen(),
+      transition: Transition.cupertino,
+      duration: const Duration(milliseconds: 600),
+      curve: Curves.easeOut,
+    );
+  }
+
+  String _getLastFourDigits() {
+    if (_cardDetailController.cardDetailList.isNotEmpty &&
+        _cardDetailController.hasFetched) {
+      return _cardDetailController.cardDetailList
+          .elementAt(_cardDetailController.selectedIndex.value)
+          .cardNumber
+          .toString()
+          .substring(12);
+    }
+    return "XXXX";
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,9 +69,9 @@ class CheckOutScreen extends StatelessWidget {
           ),
         ),
         centerTitle: true,
-        title: Text(
+        title: const Text(
           "CHECK-OUT",
-          style: kMerriweatherBold,
+          style: kMerriweatherBold16,
         ),
       ),
       body: Padding(
@@ -45,21 +84,12 @@ class CheckOutScreen extends StatelessWidget {
               children: [
                 Text(
                   "Shipping Address",
-                  style: GoogleFonts.nunitoSans(
-                    fontSize: 18,
+                  style: kNunitoSansSemiBold18.copyWith(
                     color: kTinGrey,
-                    fontWeight: FontWeight.w600,
                   ),
                 ),
                 IconButton(
-                  onPressed: () {
-                    Get.to(
-                      () => const ShippingAddressScreen(),
-                      transition: Transition.cupertino,
-                      duration: const Duration(milliseconds: 600),
-                      curve: Curves.easeOut,
-                    );
-                  },
+                  onPressed: _toShippingAddressScreen,
                   icon: SvgPicture.asset("assets/icons/edit_icon.svg"),
                 ),
               ],
@@ -79,8 +109,7 @@ class CheckOutScreen extends StatelessWidget {
                     return Center(
                       child: Text(
                         "No Shipping Addresses have been entered",
-                        style: GoogleFonts.nunitoSans(
-                          fontSize: 14,
+                        style: kNunitoSans14.copyWith(
                           color: kGrey,
                         ),
                       ),
@@ -100,35 +129,18 @@ class CheckOutScreen extends StatelessWidget {
               children: [
                 Text(
                   "Payment",
-                  style: GoogleFonts.nunitoSans(
-                    fontSize: 18,
+                  style: kNunitoSansSemiBold18.copyWith(
                     color: kTinGrey,
-                    fontWeight: FontWeight.w600,
                   ),
                 ),
                 IconButton(
-                  onPressed: () {
-                    Get.to(
-                      () => PaymentMethodsScreen(),
-                      transition: Transition.cupertino,
-                      duration: const Duration(milliseconds: 600),
-                      curve: Curves.easeOut,
-                    );
-                  },
+                  onPressed: _toPaymentMethodsScreen,
                   icon: SvgPicture.asset("assets/icons/edit_icon.svg"),
                 ),
               ],
             ),
             Obx(() {
-              String lastFourDigits = "XXXX";
-              if (_cardDetailController.cardDetailList.isNotEmpty &&
-                  _cardDetailController.hasFetched) {
-                lastFourDigits = _cardDetailController.cardDetailList
-                    .elementAt(_cardDetailController.selectedIndex.value)
-                    .cardNumber
-                    .toString()
-                    .substring(12);
-              }
+              String lastFourDigits = _getLastFourDigits();
               return Container(
                 height: 69,
                 width: double.infinity,
@@ -169,8 +181,7 @@ class CheckOutScreen extends StatelessWidget {
                     ),
                     Text(
                       "**** **** **** $lastFourDigits",
-                      style: GoogleFonts.nunitoSans(
-                        fontSize: 14,
+                      style: kNunitoSans14.copyWith(
                         fontWeight: FontWeight.w600,
                         color: kRaisinBlack,
                       ),
@@ -185,10 +196,8 @@ class CheckOutScreen extends StatelessWidget {
               children: [
                 Text(
                   "Delivery method",
-                  style: GoogleFonts.nunitoSans(
-                    fontSize: 18,
+                  style: kNunitoSansSemiBold18.copyWith(
                     color: kTinGrey,
-                    fontWeight: FontWeight.w600,
                   ),
                 ),
                 IconButton(
@@ -218,10 +227,8 @@ class CheckOutScreen extends StatelessWidget {
                   const SizedBox(width: 15),
                   Text(
                     "Fast (2-3 days)",
-                    style: GoogleFonts.nunitoSans(
-                      fontSize: 14,
+                    style: kNunitoSans14.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: kOffBlack,
                     ),
                   ),
                 ],
@@ -249,60 +256,39 @@ class CheckOutScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
+                      const Text(
                         "Order:",
-                        style: GoogleFonts.nunitoSans(
-                          fontSize: 18,
-                          color: kTinGrey,
-                        ),
+                        style: kNunitoSansTinGrey18,
                       ),
                       Text(
                         "\$ $orderAmount.00",
-                        style: GoogleFonts.nunitoSans(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                          color: kOffBlack,
-                        ),
+                        style: kNunitoSansSemiBold18,
                       ),
                     ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
+                    children: const [
                       Text(
                         "Delivery:",
-                        style: GoogleFonts.nunitoSans(
-                          fontSize: 18,
-                          color: kTinGrey,
-                        ),
+                        style: kNunitoSansTinGrey18,
                       ),
                       Text(
                         "\$ 5.00",
-                        style: GoogleFonts.nunitoSans(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                          color: kOffBlack,
-                        ),
+                        style: kNunitoSansSemiBold18,
                       ),
                     ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
+                      const Text(
                         "Total:",
-                        style: GoogleFonts.nunitoSans(
-                          fontSize: 18,
-                          color: kTinGrey,
-                        ),
+                        style: kNunitoSansTinGrey18,
                       ),
                       Text(
                         "\$ ${orderAmount + 5}.00",
-                        style: GoogleFonts.nunitoSans(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: kOffBlack,
-                        ),
+                        style: kNunitoSansSemiBold18,
                       ),
                     ],
                   ),
@@ -311,14 +297,7 @@ class CheckOutScreen extends StatelessWidget {
             ),
             const Spacer(),
             CustomElevatedButton(
-              onTap: () {
-                Get.to(
-                  () => const OrderSuccessScreen(),
-                  transition: Transition.cupertino,
-                  duration: const Duration(milliseconds: 600),
-                  curve: Curves.easeOut,
-                );
-              },
+              onTap: _toOrderSuccessScreen,
               text: 'Submit Order',
             ),
             const Spacer(),

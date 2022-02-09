@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:timberr/constants.dart';
 
 class OrdersTabBar extends StatelessWidget with PreferredSizeWidget {
@@ -19,8 +18,7 @@ class OrdersTabBar extends StatelessWidget with PreferredSizeWidget {
             children: [
               Text(
                 "Delivered",
-                style: GoogleFonts.nunitoSans(
-                  fontSize: 18,
+                style: kNunitoSans18.copyWith(
                   fontWeight:
                       (index == 0) ? FontWeight.bold : FontWeight.normal,
                   color: (index == 0) ? kOffBlack : kTinGrey,
@@ -42,8 +40,7 @@ class OrdersTabBar extends StatelessWidget with PreferredSizeWidget {
             children: [
               Text(
                 "Processing",
-                style: GoogleFonts.nunitoSans(
-                  fontSize: 18,
+                style: kNunitoSans18.copyWith(
                   fontWeight:
                       (index == 1) ? FontWeight.bold : FontWeight.normal,
                   color: (index == 1) ? kOffBlack : kTinGrey,
@@ -65,8 +62,7 @@ class OrdersTabBar extends StatelessWidget with PreferredSizeWidget {
             children: [
               Text(
                 "Cancelled",
-                style: GoogleFonts.nunitoSans(
-                  fontSize: 18,
+                style: kNunitoSans18.copyWith(
                   fontWeight:
                       (index == 2) ? FontWeight.bold : FontWeight.normal,
                   color: (index == 2) ? kOffBlack : kTinGrey,

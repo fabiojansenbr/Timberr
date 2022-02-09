@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:timberr/constants.dart';
 import 'package:timberr/controllers/cart_controller.dart';
 import 'package:timberr/controllers/favorites_controller.dart';
@@ -19,6 +18,25 @@ class ProductScreen extends StatelessWidget {
   final FavoritesController _favoriteController = Get.find();
   final CartController _cartController = Get.find();
   ProductScreen({Key? key, required this.product}) : super(key: key);
+  void _toProductReviewScreen() {
+    Get.to(() => const ProductReviewScreen());
+  }
+
+  void _addToCart() {
+    _cartController.addToCart(
+      product,
+      product.colorsList[_controller.colorIndex.value],
+      quantity: _controller.quantityCounter.value,
+    );
+  }
+
+  int _favIndex() {
+    for (int i = 0; i < _favoriteController.favoritesList.length; i++) {
+      if (product.productId ==
+          _favoriteController.favoritesList.elementAt(i).productId) return i;
+    }
+    return -1;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +92,7 @@ class ProductScreen extends StatelessWidget {
               children: [
                 Text(
                   product.name,
-                  style: GoogleFonts.gelasio(
+                  style: kGelasio18.copyWith(
                     fontSize: 24,
                     color: kOffBlack,
                     fontWeight: FontWeight.w500,
@@ -115,11 +133,7 @@ class ProductScreen extends StatelessWidget {
                         Obx(() {
                           return Text(
                             '${(_controller.quantityCounter.value < 10) ? '0' : ''}${_controller.quantityCounter.value}',
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                              color: kOffBlack,
-                            ),
+                            style: kNunitoSansSemiBold18,
                           );
                         }),
                         GestureDetector(
@@ -147,9 +161,7 @@ class ProductScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 GestureDetector(
-                  onTap: () {
-                    Get.to(() => const ProductReviewScreen());
-                  },
+                  onTap: _toProductReviewScreen,
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -161,19 +173,14 @@ class ProductScreen extends StatelessWidget {
                       const SizedBox(width: 10),
                       const Text(
                         '4.5',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: kOffBlack,
-                        ),
+                        style: kNunitoSansSemiBold18,
                       ),
                       const SizedBox(width: 10),
-                      const Padding(
-                        padding: EdgeInsets.only(top: 2),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 2),
                         child: Text(
                           '(50 reviews)',
-                          style: TextStyle(
-                            fontSize: 14,
+                          style: kNunitoSans14.copyWith(
                             fontWeight: FontWeight.w600,
                             color: kGrey,
                           ),
@@ -185,8 +192,7 @@ class ProductScreen extends StatelessWidget {
                 const SizedBox(height: 10),
                 Text(
                   product.description,
-                  style: const TextStyle(
-                    fontSize: 14,
+                  style: kNunitoSans14.copyWith(
                     fontWeight: FontWeight.w300,
                     color: kGraniteGrey,
                   ),
@@ -195,58 +201,44 @@ class ProductScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Obx(() {
-                      bool _isFavorite = false;
-                      int i = 0;
-                      for (i = 0;
-                          i < _favoriteController.favoritesList.length;
-                          i++) {
-                        if (product.productId ==
-                            _favoriteController.favoritesList
-                                .elementAt(i)
-                                .productId) {
-                          _isFavorite = true;
-                          break;
-                        }
-                      }
-                      return InkWell(
-                        customBorder: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        onTap: () {
-                          if (_isFavorite) {
-                            _favoriteController.removeProductAt(i);
-                          } else {
-                            _favoriteController.addProduct(product);
-                          }
-                        },
-                        child: Ink(
-                          height: 60,
-                          width: 60,
-                          decoration: BoxDecoration(
-                            color: kChristmasSilver,
+                    Obx(
+                      () {
+                        int index = _favIndex();
+                        return InkWell(
+                          customBorder: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16),
                           ),
-                          child: SvgPicture.asset(
-                            (_isFavorite)
-                                ? 'assets/icons/favorite_selected_icon.svg'
-                                : 'assets/icons/favorite_icon.svg',
-                            height: 24,
-                            width: 24,
-                            fit: BoxFit.scaleDown,
-                            color: kOffBlack,
+                          onTap: () {
+                            if (index == -1) {
+                              _favoriteController.addProduct(product);
+                            } else {
+                              _favoriteController.removeProductAt(index);
+                            }
+                          },
+                          child: Ink(
+                            height: 60,
+                            width: 60,
+                            decoration: BoxDecoration(
+                              color: kChristmasSilver,
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            child: SvgPicture.asset(
+                              (index == -1)
+                                  ? 'assets/icons/favorite_icon.svg'
+                                  : 'assets/icons/favorite_selected_icon.svg',
+                              height: 24,
+                              width: 24,
+                              fit: BoxFit.scaleDown,
+                              color: kOffBlack,
+                            ),
                           ),
-                        ),
-                      );
-                    }),
+                        );
+                      },
+                    ),
                     const SizedBox(width: 20),
                     Expanded(
                       child: CustomElevatedButton(
-                        onTap: () {
-                          _cartController.addToCart(product,
-                              product.colorsList[_controller.colorIndex.value],
-                              quantity: _controller.quantityCounter.value);
-                        },
+                        onTap: _addToCart,
                         text: "Add to cart",
                       ),
                     )

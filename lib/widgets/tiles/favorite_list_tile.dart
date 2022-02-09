@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:timberr/constants.dart';
 import 'package:timberr/controllers/cart_controller.dart';
 import 'package:timberr/controllers/favorites_controller.dart';
@@ -15,6 +14,22 @@ class FavoriteListTile extends StatelessWidget {
   final CartController _cartController = Get.find();
   FavoriteListTile({Key? key, required this.product}) : super(key: key);
 
+  void _productOnTap() {
+    Get.to(
+      () => ProductScreen(product: product),
+      duration: const Duration(milliseconds: 500),
+      transition: Transition.fadeIn,
+    );
+  }
+
+  void _addToCart() {
+    _cartController.addToCart(product, product.colorsList[0]);
+  }
+
+  void _removeProduct() {
+    _favoritesController.removeProduct(product);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -23,13 +38,7 @@ class FavoriteListTile extends StatelessWidget {
       child: Row(
         children: [
           GestureDetector(
-            onTap: () {
-              Get.to(
-                () => ProductScreen(product: product),
-                duration: const Duration(milliseconds: 500),
-                transition: Transition.fadeIn,
-              );
-            },
+            onTap: _productOnTap,
             child: Hero(
               tag: product.imagesList[0],
               child: ClipRRect(
@@ -60,19 +69,14 @@ class FavoriteListTile extends StatelessWidget {
                 children: [
                   Text(
                     product.name,
-                    style: GoogleFonts.nunitoSans(
+                    style: kNunitoSans14.copyWith(
                       color: kGraniteGrey,
-                      fontSize: 14,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                   Text(
                     "\$ ${product.price}",
-                    style: GoogleFonts.nunitoSans(
-                      color: kOffBlack,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: kNunitoSansBold16,
                   )
                 ],
               ),
@@ -82,9 +86,7 @@ class FavoriteListTile extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               InkWell(
-                onTap: () {
-                  _favoritesController.removeProduct(product);
-                },
+                onTap: _removeProduct,
                 customBorder: const CircleBorder(),
                 child: const Icon(
                   Icons.highlight_off,
@@ -93,9 +95,7 @@ class FavoriteListTile extends StatelessWidget {
                 ),
               ),
               InkWell(
-                onTap: () {
-                  _cartController.addToCart(product, product.colorsList[0]);
-                },
+                onTap: _addToCart,
                 customBorder: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
